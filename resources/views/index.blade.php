@@ -18,12 +18,12 @@
     </header>
     <form action="" class="flex flex-col gap-6 mt-6 relative z-10">
       <div class="flex flex-col gap-2 px-4">
-        <label for="Location" class="font-semibold text-white">Location</label>
+        <label for="Location" class="font-semibold text-white">Pencarian</label>
         <div class="rounded-full flex items-center p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
           <div class="w-6 h-6 flex shrink-0 mr-[6px]">
             <img src="assets/images/icons/filter.svg" alt="icon">
           </div>
-          <input type="text" name="keyword" placeholder="Pencarian Nama debitur">
+          <input type="text" name="keyword" placeholder="Pencarian Nama debitur" class="w-full border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent">
         </div>
       </div>
       <section id="Services" class="flex flex-col gap-3 px-4">
@@ -98,10 +98,60 @@
         </div>
       </section>
     </form>
+    
     <section id="Promo" class="flex flex-col gap-3 px-4 mt-6 relative z-10">
-      <h1 class="font-semibold">Special Offers</h1>
-
+      <h1 class="font-semibold"></h1>
+      <div class="rounded-2xl border border-[#E9E8ED] flex items-center justify-between p-4 bg-white">
+        <div class="flex items-center gap-[10px]">
+          <div class="w-[60px] h-[60px] flex shrink-0">
+            <img src="assets/images/icons/illustration.svg" alt="icon">
+          </div>
+          <div class="flex flex-col h-fit">
+            <p class="font-semibold">Galih Setiabudi</p>
+            <p class="text-sm leading-[21px] text-[#909DBF]">Kantor Cabang Kragilan</p>
+          </div>
+        </div>
+      </div>
     </section>
+
+
+<section id="Promo" class="flex flex-col gap-3 px-4 mt-3 relative z-10">
+    <h1 class="font-semibold"></h1>
+    <div class="rounded-2xl border border-[#E9E8ED] flex items-center justify-between p-4 bg-white">
+    <table class="w-full mt-2 text-sm">
+    <thead class="bg-gray-100 border-b border-gray-300">
+        <tr>
+            <th class="px-1 py-2 text-left">Kolektibilitas</th>
+            <th class="px-1 py-2 text-right">Nominal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="border-b border-gray-300">
+            <td class="px-1 py-2">Lancar</td>
+            <td class="px-1 py-2 text-right">7,060,000,000</td>
+        </tr>
+        <tr class="border-b border-gray-300">
+            <td class="px-1 py-2">DPK</td>
+            <td class="px-1 py-2 text-right">200</td>
+        </tr>
+        <tr class="border-b border-gray-300">
+            <td class="px-1 py-2">Kurang Lancar</td>
+            <td class="px-1 py-2 text-right">1,000</td>
+        </tr>
+        <tr class="border-b border-gray-300">
+            <td class="px-1 py-2">Diragukan</td>
+            <td class="px-1 py-2 text-right">800</td>
+        </tr>
+        <tr class="border-b border-gray-300">
+            <td class="px-1 py-2">Macet</td>
+            <td class="px-1 py-2 text-right">200</td>
+        </tr>
+    </tbody>
+</table>
+
+</div>
+</section>
+
     <nav id="Bottom-nav" class="fixed bottom-0 w-full max-w-[640px] mx-auto border-t border-[#E9E8ED] p-[20px_24px] bg-white z-20">
       <ul class="flex items-center justify-evenly">
         <li>
