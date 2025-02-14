@@ -11,3 +11,4 @@ Route::get('/welcome', function () {
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 
 Route::get('/penagihan', [PenagihanController::class, 'index'])->name('penagihan.index');
+Route::get('/penagihan/create', [PenagihanController::class, 'create'])->name('penagihan.create');

@@ -11,4 +11,9 @@ class PenagihanController extends Controller
     {
         return view("penagihan.index");
     }
+
+    public function create()
+    {
+        return view("penagihan.create");
+    }
 }
