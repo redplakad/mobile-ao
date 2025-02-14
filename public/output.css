@@ -1283,6 +1283,11 @@ video {
   color: rgb(255 137 105 / var(--tw-text-opacity));
 }
 
+.text-\[\#FDC500\] {
+  --tw-text-opacity: 1;
+  color: rgb(253 197 0 / var(--tw-text-opacity));
+}
+
 .text-\[\#FF8E62\] {
   --tw-text-opacity: 1;
   color: rgb(255 142 98 / var(--tw-text-opacity));

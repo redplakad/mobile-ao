@@ -21,7 +21,7 @@
         <label for="Location" class="font-semibold text-white">Pencarian</label>
         <div class="rounded-full flex items-center p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
           <div class="w-6 h-6 flex shrink-0 mr-[6px]">
-            <img src="assets/images/icons/filter.svg" alt="icon">
+            <x-tabler-search />
           </div>
           <input type="text" name="keyword" placeholder="Pencarian Nama debitur" class="w-full border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent">
         </div>
@@ -29,10 +29,10 @@
       <section id="Services" class="flex flex-col gap-3 px-4">
         <h1 class="font-semibold text-white">Selamat Datang Galih.</h1>
         <div class="grid grid-cols-3 gap-4">
-          <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+          <a href="{{ route('penagihan.index') }}" class="card-services">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
-                <img src="assets/images/icons/survey.png" alt="icon">
+                <img src="assets/images/icons/penagihan.png" alt="icon">
               </div>
               <div class="flex flex-col">
                 <p class="font-semibold text-sm leading-[21px]">Penagihan</p>
@@ -41,7 +41,7 @@
             </div>
           </a>
           <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
                 <img src="assets/images/icons/survey.png" alt="icon">
               </div>
@@ -52,20 +52,20 @@
             </div>
           </a>
           <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
-                <img src="assets/images/icons/survey.png" alt="icon">
+                <img src="assets/images/icons/desk.png" alt="icon">
               </div>
               <div class="flex flex-col">
-                <p class="font-semibold text-sm leading-[21px]">Desk Collection</p>
+                <p class="font-semibold text-sm leading-[21px]">Desk Coll</p>
                 <p class="text-xs leading-[18px] text-[#909DBF]">18 Aksi</p>
               </div>
             </div>
           </a>
           <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
-                <img src="assets/images/icons/survey.png" alt="icon">
+                <img src="assets/images/icons/nominatif.png" alt="icon">
               </div>
               <div class="flex flex-col">
                 <p class="font-semibold text-sm leading-[21px]">Nominatif</p>
@@ -74,9 +74,9 @@
             </div>
           </a>
           <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
-                <img src="assets/images/icons/survey.png" alt="icon">
+                <img src="assets/images/icons/analisa.png" alt="icon">
               </div>
               <div class="flex flex-col">
                 <p class="font-semibold text-sm leading-[21px]">Analisa</p>
@@ -85,9 +85,9 @@
             </div>
           </a>
           <a href="store-list.html" class="card-services">
-            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-4 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
+            <div class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
               <div class="w-[50px] h-[50px] flex shrink-0">
-                <img src="assets/images/icons/survey.png" alt="icon">
+                <img src="assets/images/icons/tugas.png" alt="icon">
               </div>
               <div class="flex flex-col">
                 <p class="font-semibold text-sm leading-[21px]">Tugas</p>
@@ -104,7 +104,7 @@
       <div class="rounded-2xl border border-[#E9E8ED] flex items-center justify-between p-4 bg-white">
         <div class="flex items-center gap-[10px]">
           <div class="w-[60px] h-[60px] flex shrink-0">
-            <img src="assets/images/icons/illustration.svg" alt="icon">
+            <img src="assets/images/photos/avatar.png" alt="icon">
           </div>
           <div class="flex flex-col h-fit">
             <p class="font-semibold">Galih Setiabudi</p>
@@ -157,15 +157,15 @@
         <li>
           <a href="index.html" class="flex flex-col items-center text-center gap-1">
             <div class="w-6 h-6 flex shrink-0 ">
-              <img src="assets/images/icons/element-equal.svg" alt="icon">
+            <x-tabler-home class="text-[#FDC500]"/>
             </div>
-            <p class="font-semibold text-xs leading-[18px] text-[#FF8969]">Beranda</p>
+            <p class="font-semibold text-xs leading-[18px] text-[#FDC500]">Beranda</p>
           </a>
         </li>
         <li>
           <a href="check-booking.html" class="flex flex-col items-center text-center gap-1">
             <div class="w-6 h-6 flex shrink-0 ">
-              <img src="assets/images/icons/note-favorite-grey.svg" alt="icon">
+            <x-tabler-report class="text-[#BABEC7]"/>
             </div>
             <p class="font-semibold text-xs leading-[18px] text-[#BABEC7]">Laporan</p>
           </a>
@@ -173,7 +173,7 @@
         <li>
           <a href="#" class="flex flex-col items-center text-center gap-1">
             <div class="w-6 h-6 flex shrink-0 ">
-              <img src="assets/images/icons/ticket-discount-grey.svg" alt="icon">
+              <x-tabler-brand-mailgun class="text-[#BABEC7]"/>
             </div>
             <p class="font-semibold text-xs leading-[18px] text-[#BABEC7]">Aktivitas</p>
           </a>
@@ -181,7 +181,7 @@
         <li>
           <a href="#" class="flex flex-col items-center text-center gap-1">
             <div class="w-6 h-6 flex shrink-0 ">
-              <img src="assets/images/icons/message-question-grey.svg" alt="icon">
+              <x-tabler-help-square-rounded class="text-[#BABEC7]"/>
             </div>
             <p class="font-semibold text-xs leading-[18px] text-[#BABEC7]">Bantuan</p>
           </a>
