@@ -21,4 +21,9 @@ class PenagihanController extends Controller
     {
         return view("penagihan.take");
     }
+
+    public function preview()
+    {
+        return view("penagihan.preview");
+    }
 }

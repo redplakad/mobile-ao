@@ -18,12 +18,18 @@
     </div>
     <div class="flex h-full flex-1 mt-5">
       <form action="payment.html" class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto">
-          <a href="{{ route('penagihan.take-1') }}" class="rounded-full flex items-center ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
+        
+        <div class="flex flex-col gap-2">
+          <img alt="image" id="image-preview" class="img-fluid rounded-2">
+        </div>
+        <div class="flex flex-col item-center gap-2">
+          <a href="{{ route('penagihan.take') }}" class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
             <div class="w-6 h-6 flex shrink-0 mr-[10px]">
               <x-tabler-camera />
               </div>
             Ambil Foto Debitur
           </a>
+        </div>
       <div class="flex flex-col gap-2">
           <label for="Name" class="font-semibold">Nomor Kredit</label>
           <div class="rounded-full flex items-center ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
@@ -89,6 +95,14 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="{{ asset('js/booking.js') }}"></script>
+
+  <script>
+    var image = localStorage.getItem('image');
+    var imagePreview = document.getElementById('image-preview');
+
+    // Gunakan gambar dari localStorage jika ada, jika tidak gunakan placeholder
+    imagePreview.src = image ? image : "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
+  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
