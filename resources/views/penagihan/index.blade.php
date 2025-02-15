@@ -1,4 +1,6 @@
 @extends('layouts.second')
+
+@section('title', 'Daftar Penagihan')
 @section('content')
     <div id="Top-nav" class="flex items-center justify-between px-4 pt-5">
         <a href="{{ route('front.index') }}">

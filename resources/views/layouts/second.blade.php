@@ -12,6 +12,8 @@
   <main class="bg-[#FAFAFA] max-w-[640px] mx-auto min-h-screen relative flex flex-col has-[#CTA-nav]:pb-[120px] has-[#Bottom-nav]:pb-[120px]">
     <div class="content">
       @yield('content')
+
+      @include('partials.bottom-nav')
     </div>
     @include('partials.footer')
   </main>
