@@ -15,7 +15,6 @@
     <div class="content">
       @yield('content')
 
-      
       @include('partials.bottom-nav')
     </div>
     @include('partials.footer')

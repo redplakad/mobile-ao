@@ -19,7 +19,7 @@
     </div>
 <div class="max-w-screen-sm mx-auto bg-white min-h-screen p-3">
     <div class="flex flex-col justify-center items-center relative">
-        <video autoplay muted id="video-webcam" class="w-full max-w-md">
+        <video autoplay playsinline id="video-webcam" class="w-full max-w-md">
             Browsermu tidak mendukung bro, upgrade donk!
         </video>
 
@@ -34,43 +34,44 @@
 
 @push('javascript')
 
-<script src="https://cdn.tailwindcss.com"></script>
 <script>
-    
     localStorage.removeItem('image');
-    var video = document.querySelector("#video-webcam");
+    let video = document.getElementById("video-webcam");
+    let useFrontCamera = false;
+    let stream = null;
 
-navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
-    navigator.msGetUserMedia || navigator.oGetUserMedia;
+    async function startCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+        }
 
-if (navigator.getUserMedia) {
-    navigator.getUserMedia({
-        video: true
-    }, handleVideo, videoError);
-}
+        let constraints = {
+            video: {
+                facingMode: useFrontCamera ? "user" : "environment"
+            }
+        };
 
-function handleVideo(stream) {
-    video.srcObject = stream;
-}
+        try {
+            stream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = stream;
+        } catch (err) {
+            alert("Gagal mengakses kamera: " + err.message);
+        }
+    }
 
-function videoError(e) {
-    alert("Izinkan menggunakan webcam untuk demo!");
-}
+    function takeSnapshot() {
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        let dataURL = canvas.toDataURL('image/png');
+        localStorage.setItem('image', dataURL);
+        window.location.href = '{{ route("penagihan.take.preview") }}';
+    }
 
-function takeSnapshot() {
-
-    var canvas = document.createElement('canvas');
-    var context = canvas.getContext('2d');
-    var video = document.getElementById('video-webcam');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0);
-    var dataURL = canvas.toDataURL('image/png');
-    localStorage.setItem('image', dataURL);
-
-    window.location.href = '{{ route("penagihan.take.preview") }}';
-}
-
+    document.addEventListener("DOMContentLoaded", startCamera);
 </script>
+
 @vite(['resources/js/take.js'])
 @endpush
