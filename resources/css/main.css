@@ -2,3 +2,7 @@ body {
     font-family: "Poppins";
     color: #270738;
 }
+
+#map {
+    height: 256px; /* 64 * 4px */
+}
