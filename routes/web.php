@@ -8,6 +8,8 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::get('/login', [PenagihanController::class, 'index'])->name('penagihan.index');
+
 Route::get('/', [FrontController::class, 'index'])->name('front.index');
 
 Route::get('/penagihan', [PenagihanController::class, 'index'])->name('penagihan.index');
