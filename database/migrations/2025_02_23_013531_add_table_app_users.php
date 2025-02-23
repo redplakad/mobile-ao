@@ -9,11 +9,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('app_users', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // UUID sebagai primary key
-            $table->string('kode_ao')->unique(); // Wajib
-            $table->foreignId('branch_id')->constrained()->onDelete('cascade'); // Wajib
-            $table->foreignId('division_id')->constrained()->onDelete('cascade'); // Wajib
-            $table->string('username')->unique(); // Tambahkan username
+            $table->id();
+            $table->string('kode_ao')->unique();
+            $table->foreignId('branch_id')->constrained()->onDelete('cascade');
+            $table->foreignId('division_id')->constrained()->onDelete('cascade');
+            $table->string('username')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');

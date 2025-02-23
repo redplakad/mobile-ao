@@ -6,3 +6,7 @@ body {
 #map {
     height: 256px; /* 64 * 4px */
 }
+
+h-8{
+    height: 32px;
+}

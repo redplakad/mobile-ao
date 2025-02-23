@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class AppUser extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasRoles;
 
     // Tentukan nama tabel jika tidak mengikuti konvensi Laravel
     protected $table = 'app_users';
