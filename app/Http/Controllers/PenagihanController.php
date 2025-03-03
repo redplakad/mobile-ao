@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penagihan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -56,6 +57,7 @@ class PenagihanController extends Controller
     $penagihan->address = $request->address;
     $penagihan->hasil_kunjungan = $request->hasil_kunjungan;
     $penagihan->uraian_kunjungan = $request->uraian_kunjungan;
+    $penagihan->by_user = Auth::id();
 
     if ($request->hasFile('image')) {
         $image = $request->file('image');

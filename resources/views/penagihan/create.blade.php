@@ -17,11 +17,20 @@
         </a>
     </div>
     <div class="flex h-full flex-1 mt-5">
-        <form action="payment.html"
-            class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto">
-
+        <form action="{{ route('penagihan.store') }}"
+            class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto" method="POST">
+            @csrf
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <div class="flex flex-col gap-2">
                 <img alt="image" id="image-preview" class="img-fluid rounded-2">
@@ -42,7 +51,7 @@
                     <div class="w-6 h-6 flex shrink-0 mr-[10px]">
                         <x-tabler-id />
                     </div>
-                    <input type="text" name="" id="Name"
+                    <input type="text" name="nomor_kredit" id="Name"
                         class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
                         placeholder="Nomor Rekening Kredit" required>
                 </div>
@@ -54,7 +63,7 @@
                     <div class="w-6 h-6 flex shrink-0 mr-[10px]">
                         <x-tabler-user />
                     </div>
-                    <input type="text" name="" id="Name"
+                    <input type="text" name="nama_debitur" id="Name"
                         class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
                         placeholder="Nama Debitur" required>
                 </div>
@@ -66,7 +75,7 @@
                     <div class="w-6 h-6 flex shrink-0 mr-[10px]">
                         <x-tabler-phone />
                     </div>
-                    <input type="tel" name="" id="Name"
+                    <input type="tel" name="no_telepon" id="Name"
                         class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
                         placeholder="Nomor Telepon Aktif" required>
                 </div>
@@ -91,14 +100,14 @@
                         <div
                             class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
                             Bayar</div>
-                        <input type="radio" name="day" id="" class="absolute top-1/2 left-1/2 -z-10"
+                        <input type="radio" name="hasil_kunjungan" id="" class="absolute top-1/2 left-1/2 -z-10"
                             required>
                     </label>
                     <label class="!w-fit group relative">
                         <div
                             class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
                             Tidak Bayar</div>
-                        <input type="radio" name="day" id="" class="absolute top-1/2 left-1/2 -z-10"
+                        <input type="radio" name="hasil_kunjungan" id="" class="absolute top-1/2 left-1/2 -z-10"
                             required>
                     </label>
                 </div>
@@ -107,7 +116,7 @@
                 <label for="Name" class="font-semibold">Uraian Kunjungan</label>
                 <div
                     class="rounded-6 flex items-center ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
-                    <textarea name="" id="Name"
+                    <textarea name="uraian_kunjungan" id="Name"
                         class="h-300 appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
                         placeholder="Uraian Kunjungan" required></textarea>
                 </div>
