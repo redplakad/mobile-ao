@@ -1,6 +1,6 @@
 @extends('layouts.second')
 @section('content')
-    <div id="Top-nav" class="flex items-center justify-between px-4 pt-5">
+    <div id="Top-nav" class="flex items-center justify-between px-4 pt-10">
         <a href="{{ route('penagihan.index') }}">
             <div class="w-10 h-10 flex shrink-0">
                 <x-tabler-arrow-narrow-left />

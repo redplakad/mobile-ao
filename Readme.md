@@ -1,1 +1,5 @@
-Mobile app for Account Officer
+aplikasi ini hanya berjalan di php artisan serve
+default passowrd garuda1*
+
+tahapan development : 
+function store penagihan belum di testing dan belum berfungsi

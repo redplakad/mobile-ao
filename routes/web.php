@@ -16,8 +16,9 @@ Route::middleware('auth')->group(function () {
     /* Penagihan route section */
     Route::get('/penagihan', [PenagihanController::class, 'index'])->name('penagihan.index');
     Route::get('/penagihan/create', [PenagihanController::class, 'create'])->name('penagihan.create');
+    Route::post('/penagihan/create', [PenagihanController::class, 'store'])->name('penagihan.store');
     Route::get('/penagihan/take', [PenagihanController::class, 'take'])->name('penagihan.take');
-    Route::get('/penagihan/preview', [PenagihanController::class, 'preview'])->name('penagihan.preview');
+    Route::get('/penagihan/preview', [PenagihanController::class, 'preview'])->name('penagihan.take.preview');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
