@@ -1,21 +1,26 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SMART AO | Sistem Monitoring Realtime & Terintegrasi AO</title>
-  <link rel="icon" type="image/png" href="{{ env('/assets/images/') }} /favicon.png')">
-  @vite(['resources/css/main.css', 'resources/css/output.css'])
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SMART AO | Sistem Monitoring Realtime & Terintegrasi AO</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+
+    <!-- Stylesheets -->
+    @vite(['resources/css/app.css', 'resources/css/main.css', 'resources/css/output.css'])
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
-<body>
-  <main class="bg-[#FAFAFA] max-w-[640px] mx-auto min-h-screen relative flex flex-col has-[#CTA-nav]:pb-[120px] has-[#Bottom-nav]:pb-[120px]">
-    <div class="content">
-      @yield('content')
-    </div>
+<body class="bg-[#FAFAFA] min-h-screen flex flex-col">
+    <main class="max-w-[640px] w-full mx-auto flex-grow relative has-[#CTA-nav]:pb-[120px] has-[#Bottom-nav]:pb-[120px]">
+        @yield('content')
+    </main>
+
     @include('partials.footer')
-  </main>
-  @stack('javascript')
+
+    <!-- JavaScript -->
+    @stack('javascript')
 </body>
 </html>

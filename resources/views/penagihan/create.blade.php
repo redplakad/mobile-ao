@@ -18,22 +18,26 @@
     </div>
     <div class="flex h-full flex-1 mt-5">
         <form action="{{ route('penagihan.store') }}"
-            class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto" method="POST">
+            class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto"
+            method="POST">
             @csrf
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4" role="alert">
+                    <p class="font-bold">Terjadi kesalahan:</p>
+                    <ul class="mt-2 space-y-1 text-sm list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
             @endif
+            
+               
 
             <div class="flex flex-col gap-2">
-                <img alt="image" id="image-preview" class="img-fluid rounded-2">
+                <img alt="" id="image-preview" class="img-fluid rounded-2">
             </div>
             <div class="flex flex-col item-center gap-2">
                 <a href="{{ route('penagihan.take') }}"
@@ -88,9 +92,11 @@
 
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
-                <textarea class="w-full p-[12px_20px] border border-gray-300 rounded-md focus:ring focus:ring-blue-300" id="address"
-                    name="address" rows="3"></textarea>
+                <textarea id="address" name="address" rows="3"
+                    class="w-full p-[12px_20px] rounded-md focus:ring focus:ring-blue-300 bg-white outline-none border-none placeholder-gray-400"
+                    placeholder="Masukkan alamat lengkap"></textarea>
             </div>
+            
 
 
             <div class="flex flex-col gap-2">
@@ -136,44 +142,56 @@
     <script src="{{ asset('js/booking.js') }}"></script>
 
     <script>
-        var image = localStorage.getItem('image');
-        var imagePreview = document.getElementById('image-preview');
+        document.addEventListener("DOMContentLoaded", async () => {
+            const imagePreview = document.getElementById("image-preview");
+            const latInput = document.getElementById("lat");
+            const lngInput = document.getElementById("lng");
+            const addressInput = document.getElementById("address");
 
-        // Gunakan gambar dari localStorage jika ada, jika tidak gunakan placeholder
-        imagePreview.src = image ? image : "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
+            // Periksa apakah ada gambar di localStorage
+            const storedImage = localStorage.getItem("image");
+            
+            // Jika ada gambar, gunakan gambar tersebut; jika tidak, gunakan placeholder
+            imagePreview.src = storedImage ? storedImage : "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
 
-        var map = document.getElementById('map');
-        var lattitude = document.getElementById('lat');
-        var longitude = document.getElementById('lng');
-        var address = document.getElementById('address');
+            if (!navigator.geolocation) {
+                console.error("Geolocation is not supported by this browser.");
+                return;
+            }
 
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const { latitude: lat, longitude: lng } = position.coords;
+                latInput.value = lat;
+                lngInput.value = lng;
 
-            lattitude.value = lat;
-            longitude.value = lng;
+                // Inisialisasi peta
+                const map = L.map("map").setView([lat, lng], 13);
+                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors",
+                    maxZoom: 18,
+                }).addTo(map);
+                
+                const marker = L.marker([lat, lng]).addTo(map);
 
-            var mymap = L.map('map').setView([lat, lng], 13);
-
-            var marker = L.marker([lat, lng]).addTo(mymap);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
-                maxZoom: 18,
-            }).addTo(mymap);
-
-            var geocodingUrl =
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
-
-            fetch(geocodingUrl)
-                .then(response => response.json())
-                .then(data => {
-                    address.value = data.display_name;
-                    marker.bindPopup(`<b>Lokasi Laporan</b><br />Kamu berada di ${data.display_name}`)
-                        .openPopup();
-                })
-                .catch(error => console.error('Error fetching reverse geocoding data:', error));
+                // Ambil alamat dari koordinat
+                fetchReverseGeocoding(lat, lng, marker, addressInput);
+            }, (error) => {
+                console.error("Geolocation error:", error.message);
+            });
         });
+
+        async function fetchReverseGeocoding(lat, lng, marker, addressInput) {
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
+                const data = await response.json();
+                
+                if (data.display_name) {
+                    addressInput.value = data.display_name;
+                    marker.bindPopup(`<b>Lokasi Laporan</b><br />Kamu berada di ${data.display_name}`).openPopup();
+                }
+            } catch (error) {
+                console.error("Error fetching reverse geocoding data:", error);
+            }
+        }
     </script>
 @endpush

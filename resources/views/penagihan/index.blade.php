@@ -18,7 +18,18 @@
             </div>
         </a>
     </div>
+
     <section id="Store-list" class="flex flex-col gap-6 px-4 mt-[30px]">
+        @if(session('success'))
+            <div class="alert-success">
+                <span class="alert-icon">✔</span>
+                <span class="alert-message">
+                    {{ session('success') }}
+                </span>
+                <button class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+            </div>
+        @endif
+        
         <a href="details.html" class="card">
             <div
                 class="flex flex-col gap-4 rounded-[20px] ring-1 ring-[#E9E8ED] pb-4 bg-white overflow-hidden transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
@@ -129,3 +140,8 @@
         </a>
     </section>
 @endsection
+@push("javascript")
+    <script>
+        localStorage.removeItem("image");
+    </script>
+@endpush

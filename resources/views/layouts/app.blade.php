@@ -14,7 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
     <!-- Stylesheets -->
-    @vite(['resources/css/main.css', 'resources/css/output.css'])
+    @vite(['resources/css/app.css', 'resources/css/main.css', 'resources/css/output.css'])
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <!-- Scripts -->

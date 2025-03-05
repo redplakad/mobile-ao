@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penagihan;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PenagihanController extends Controller
 {
-    //
     public function index()
     {
         return view("penagihan.index");
@@ -31,42 +30,40 @@ class PenagihanController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'lat' => 'required|numeric',
-        'lng' => 'required|numeric',
-        'nomor_kredit' => 'required|string',
-        'nama_debitur' => 'required|string',
-        'no_telepon' => 'required|string',
-        'address' => 'required|string',
-        'hasil_kunjungan' => 'required|string',
-        'uraian_kunjungan' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'lat' => 'required|numeric',
+            'lng' => 'required|numeric',
+            'nomor_kredit' => 'required|numeric|min:10',
+            'nama_debitur' => 'required|string|min:3',
+            'no_telepon' => [
+                'required',
+                'regex:/^0[0-9]{7,}$/'
+            ],
+            'address' => 'required|string',
+            'hasil_kunjungan' => 'required|string',
+            'uraian_kunjungan' => 'required|string|min:10',
+        ]);
 
-    if ($validator->fails()) {
-        return back()->withErrors($validator)->withInput();
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $penagihanData = $request->only([
+            'lat', 'lng', 'nomor_kredit', 'nama_debitur', 
+            'no_telepon', 'address', 'hasil_kunjungan', 'uraian_kunjungan'
+        ]);
+        
+        $penagihanData['by_user'] = Auth::id();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $penagihanData['image'] = base64_encode(file_get_contents($image->path()));
+        }
+
+        Penagihan::create($penagihanData);
+
+        return redirect()->route('penagihan.index')->with('success', 'Data berhasil disimpan.');
     }
-
-    $penagihan = new Penagihan();
-    $penagihan->lat = $request->lat;
-    $penagihan->lng = $request->lng;
-    $penagihan->nomor_kredit = $request->nomor_kredit;
-    $penagihan->nama_debitur = $request->nama_debitur;
-    $penagihan->no_telepon = $request->no_telepon;
-    $penagihan->address = $request->address;
-    $penagihan->hasil_kunjungan = $request->hasil_kunjungan;
-    $penagihan->uraian_kunjungan = $request->uraian_kunjungan;
-    $penagihan->by_user = Auth::id();
-
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        $imageData = base64_encode(file_get_contents($image->path()));
-        $penagihan->image = $imageData;
-    }
-
-    $penagihan->save();
-
-    return redirect()->route('penagihan.index')->with('success', 'Data berhasil disimpan.');
-}
 }
