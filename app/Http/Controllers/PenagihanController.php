@@ -32,7 +32,7 @@ class PenagihanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required',
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'nomor_kredit' => 'required|numeric|min:10',
