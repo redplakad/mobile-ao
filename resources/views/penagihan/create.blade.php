@@ -11,7 +11,7 @@
             <p class="text-sm leading-[21px] text-[#909DBF]">Buat laporan penagihan baru</p>
         </div>
         <a href="{{ route('front.index') }}" class="w-10 h-10 flex shrink-0">
-            <div class="w-10 h-10 flex shrink-0">
+            <div class="w-10 h-10 flex shrink-0 ml-4">
                 <x-tabler-x />
             </div>
         </a>
@@ -60,10 +60,10 @@
                         </svg>
 
                     </div>
-                    <input type="text" name="nomor_kredit" id="nomor_kredit"
-                        value="{{ old('nomor_kredit') }}"
-                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        placeholder="007300012345" required>
+                    <input type="text" name="nomor_kredit" id="nomor_kredit" value="{{ old('nama_debitur') }}"
+                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
+                        placeholder="007300012345" required disabled />
                 </div>
             </div>
 
@@ -78,10 +78,10 @@
                         </svg>
 
                     </div>
-                    <input type="text" name="nama_debitur" id="nama_debitur"
-                        value="{{ old('nama_debitur') }}"
-                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        placeholder="Nama Lengkap" required>
+                    <input type="text" name="nama_debitur" id="nama_debitur" value="{{ old('nama_debitur') }}"
+                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
+                        placeholder="Nama Lengkap" required disabled />
                 </div>
             </div>
 
@@ -97,10 +97,10 @@
 
 
                     </div>
-                    <input type="text" name="no_telepon" id="no_telepon"
-                        value="{{ old('no_telepon') }}"
-                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                        placeholder="087770112233" required>
+                    <input type="text" name="no_telepon" id="no_telepon" value="{{ old('nama_debitur') }}"
+                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
+                        placeholder="007300012345" required disabled />
                 </div>
             </div>
 
@@ -113,8 +113,9 @@
                 <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Alamat Lengkap</label>
                 <div class="mt-2">
                     <textarea rows="4" name="address" id="address"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" required>
-                    </textarea>
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
+                        required disabled>{{ old('address') }}</textarea>
                 </div>
             </div>
             <div class="flex flex-col gap-2">
@@ -125,16 +126,16 @@
                             class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
                             Bayar</div>
                         <input type="radio" name="hasil_kunjungan" id=""
-                            class="absolute top-1/2 left-1/2 -z-10" 
-                            {{ old('hasil_kunjungan') == 'Bayar' ? 'checked' : '' }} required>
+                            class="absolute top-1/2 left-1/2 -z-10"
+                            {{ old('hasil_kunjungan') == 'Bayar' ? 'checked' : '' }} required disabled>
                     </label>
                     <label class="!w-fit group relative">
                         <div
                             class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
                             Tidak Bayar</div>
                         <input type="radio" name="hasil_kunjungan" id=""
-                            class="absolute top-1/2 left-1/2 -z-10" 
-                            {{ old('hasil_kunjungan') == 'Tidak Bayar' ? 'checked' : '' }} required>
+                            class="absolute top-1/2 left-1/2 -z-10"
+                            {{ old('hasil_kunjungan') == 'Tidak Bayar' ? 'checked' : '' }} required disabled>
                     </label>
                 </div>
             </div>
@@ -142,20 +143,28 @@
             <div>
                 <label for="catatan" class="block text-sm font-medium leading-6 text-gray-900">Catatan Kunjungan</label>
                 <div class="mt-2">
-                    <textarea rows="4" name="uraian_kunjungan" id="catatan"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" required>{{ old('uraian_kunjungan') }}</textarea>
+                    <textarea rows="4" name="uraian_kunjungan" id="address"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
+                        placeholder="Deskripsikan hasil kunjungan." required disabled>{{ old('uraian_kunjungan') }}</textarea>
                 </div>
             </div>
 
             <div id="CTA" class="w-full flex items-center justify-between bg-white">
-                <button type="submit" class="w-full inline-flex items-center justify-center gap-x-2 rounded-full bg-blue-600 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200 ease-in-out">
-                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                <button type="submit"
+                    class="w-full inline-flex items-center justify-center gap-x-2 rounded-full bg-blue-600 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200 ease-in-out
+                            disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-70"
+                    disabled>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
                     </svg>
-                    Simpan
+
+                    Simpan Penagihan
                 </button>
-                
-                  
+
+
             </div>
         </form>
     </div>
@@ -177,10 +186,20 @@
             // Periksa apakah ada gambar di localStorage
             const storedImage = localStorage.getItem("image");
 
+            if(storedImage != null){
+                document.querySelectorAll('input, textarea, button').forEach(el => {
+                    el.disabled = false;
+                });
+            }
+            if(storedImage == null)
+            {
+                alert("test 1 2 3");
+            }
+
             // Jika ada gambar, gunakan gambar tersebut; jika tidak, gunakan placeholder
 
             image.value = storedImage;
-            imagePreview.src = storedImage ? storedImage:
+            imagePreview.src = storedImage ? storedImage :
                 "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
 
             if (!navigator.geolocation) {

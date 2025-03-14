@@ -8,6 +8,7 @@
         {
             Schema::create('penagihan', function (Blueprint $table) {
                 $table->id();
+                $table->uuid('uuid')->unique();
                 $table->decimal('lat', 10, 7);
                 $table->decimal('lng', 10, 7);
                 $table->string('nomor_kredit');

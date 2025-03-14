@@ -66,4 +66,10 @@ class PenagihanController extends Controller
 
         return redirect()->route('penagihan.index')->with('success', 'Data berhasil disimpan.');
     }
+
+    public function detail($uuid)
+    {
+        $post = Penagihan::where('uuid', $uuid)->firstOrFail();
+        return view('penagihan.detail', compact('data'));
+    }
 }

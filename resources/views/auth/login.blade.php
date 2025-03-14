@@ -1,4 +1,4 @@
-@extends('layouts.second')
+@extends('layouts.third')
 
 @section('content')
     <header class="flex flex-col gap-3 items-center text-center pt-10 relative z-10">
@@ -23,32 +23,37 @@
 
             <!-- Nama Pengguna -->
             <div class="flex flex-col gap-2">
-                <label for="username" class="font-semibold">Email</label>
-                <div
-                    class="rounded-full flex items-center ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
-                    <div class="w-6 h-6 flex shrink-0 mr-[10px]">
-                        <x-tabler-user />
+                <label for="nomor_kredit" class="block text-sm font-medium leading-6 text-gray-900">Email Pengguna</label>
+                <div class="relative mt-2 rounded-full shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+                          </svg>
                     </div>
                     <input type="text" name="email" id="email"
-                        class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
-                        placeholder="Email" value="{{ old('email') }}" required>
+                        value="{{ old('nomor_kredit') }}"
+                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" 
+                        placeholder="Ketikan email pengguna"
+                    required>
                 </div>
             </div>
 
-            <!-- Kata Sandi -->
             <div class="flex flex-col gap-2">
-                <label for="password" class="font-semibold">Kata Sandi</label>
-                <div
-                    class="rounded-full flex items-center ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
-                    <div class="w-6 h-6 flex shrink-0 mr-[10px]">
-                        <x-tabler-lock />
+                <label for="nomor_kredit" class="block text-sm font-medium leading-6 text-gray-900">Kata Sandi</label>
+                <div class="relative mt-2 rounded-full shadow-sm">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                        </svg>
+
                     </div>
-                    <input type="password" name="password" id="password"
-                        class="appearance-none outline-none w-full font-semibold placeholder:font-normal placeholder:text-[#909DBF]"
-                        placeholder="Masukkan Kata Sandi" required autocomplete="current-password">
+                    <input type="text" name="password" id="password"
+                        value="{{ old('nomor_kredit') }}"
+                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6" 
+                        placeholder="Ketikan kata sandi"
+                    required>
                 </div>
             </div>
-
             <!-- Remember Me -->
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">

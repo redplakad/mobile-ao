@@ -3,6 +3,7 @@
 
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Support\Str;
 
     class Penagihan extends Model
     {
@@ -29,5 +30,14 @@
         public function user()
         {
             return $this->belongsTo(AppUser::class, 'by_user');
+        }
+
+        protected static function boot()
+        {
+            parent::boot();
+
+            static::creating(function ($penagihan) {
+                $penagihan->uuid = (string) Str::uuid();
+            });
         }
     }
