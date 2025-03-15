@@ -11,7 +11,8 @@ class PenagihanController extends Controller
 {
     public function index()
     {
-        return view("penagihan.index");
+        $penagihan = Penagihan::latest()->paginate(10); // 10 data per halaman
+        return view('penagihan.index', compact('penagihan'));
     }
 
     public function create()
@@ -52,15 +53,10 @@ class PenagihanController extends Controller
 
         $penagihanData = $request->only([
             'lat', 'lng', 'nomor_kredit', 'nama_debitur', 
-            'no_telepon', 'address', 'hasil_kunjungan', 'uraian_kunjungan'
+            'no_telepon', 'address', 'hasil_kunjungan', 'uraian_kunjungan','image'
         ]);
         
         $penagihanData['by_user'] = Auth::id();
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $penagihanData['image'] = base64_encode(file_get_contents($image->path()));
-        }
 
         Penagihan::create($penagihanData);
 
@@ -69,7 +65,7 @@ class PenagihanController extends Controller
 
     public function detail($uuid)
     {
-        $post = Penagihan::where('uuid', $uuid)->firstOrFail();
+        $data = Penagihan::where('uuid', $uuid)->firstOrFail();
         return view('penagihan.detail', compact('data'));
     }
 }

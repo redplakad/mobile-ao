@@ -35,8 +35,6 @@
                 </div>
             @endif
 
-
-
             <div class="flex flex-col gap-2">
                 <img alt="" id="image-preview" class="img-fluid rounded-2">
             </div>
@@ -100,7 +98,7 @@
                     <input type="text" name="no_telepon" id="no_telepon" value="{{ old('nama_debitur') }}"
                         class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="007300012345" required disabled />
+                        placeholder="081234567890" required disabled />
                 </div>
             </div>
 
@@ -121,24 +119,32 @@
             <div class="flex flex-col gap-2">
                 <h2 class="font-semibold">Hasil Kunjungan</h2>
                 <div class="flex items-center gap-2">
-                    <label class="!w-fit group relative">
-                        <div
-                            class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
-                            Bayar</div>
-                        <input type="radio" name="hasil_kunjungan" id=""
-                            class="absolute top-1/2 left-1/2 -z-10"
+                    <!-- Option: Bayar -->
+                    <label class="group relative cursor-pointer">
+                        <input type="radio" name="hasil_kunjungan" value="Bayar" class="sr-only peer"
                             {{ old('hasil_kunjungan') == 'Bayar' ? 'checked' : '' }} required disabled>
-                    </label>
-                    <label class="!w-fit group relative">
                         <div
-                            class="rounded-full !w-fit border border-[#E9E8ED] p-[12px_20px] font-semibold transition-all duration-300 hover:bg-[#5B86EF] hover:text-white bg-white group-has-[:checked]:bg-[#5B86EF] group-has-[:checked]:text-white group-has-[:disabled]:bg-[#EEEFF4] group-has-[:disabled]:text-[#AAADBF]">
-                            Tidak Bayar</div>
-                        <input type="radio" name="hasil_kunjungan" id=""
-                            class="absolute top-1/2 left-1/2 -z-10"
+                            class="rounded-full border border-[#E9E8ED] px-5 py-3 font-semibold transition-all duration-300 bg-white text-[#333]
+                                   peer-checked:bg-[#5B86EF] peer-checked:text-white
+                                   peer-disabled:bg-[#EEEFF4] peer-disabled:text-[#AAADBF]">
+                            Bayar
+                        </div>
+                    </label>
+
+                    <!-- Option: Tidak Bayar -->
+                    <label class="group relative cursor-pointer">
+                        <input type="radio" name="hasil_kunjungan" value="Tidak Bayar" class="sr-only peer"
                             {{ old('hasil_kunjungan') == 'Tidak Bayar' ? 'checked' : '' }} required disabled>
+                        <div
+                            class="rounded-full border border-[#E9E8ED] px-5 py-3 font-semibold transition-all duration-300 bg-white text-[#333]
+                                   peer-checked:bg-[#5B86EF] peer-checked:text-white
+                                   peer-disabled:bg-[#EEEFF4] peer-disabled:text-[#AAADBF]">
+                            Tidak Bayar
+                        </div>
                     </label>
                 </div>
             </div>
+
 
             <div>
                 <label for="catatan" class="block text-sm font-medium leading-6 text-gray-900">Catatan Kunjungan</label>
@@ -186,18 +192,15 @@
             // Periksa apakah ada gambar di localStorage
             const storedImage = localStorage.getItem("image");
 
-            if(storedImage != null){
+            if (storedImage != null) {
+                image.value = storedImage;
+
+                console.log(image.value);
                 document.querySelectorAll('input, textarea, button').forEach(el => {
                     el.disabled = false;
                 });
             }
-            if(storedImage == null)
-            {
-                alert("test 1 2 3");
-            }
-
             // Jika ada gambar, gunakan gambar tersebut; jika tidak, gunakan placeholder
-
             image.value = storedImage;
             imagePreview.src = storedImage ? storedImage :
                 "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
