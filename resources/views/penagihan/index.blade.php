@@ -62,14 +62,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="rating flex flex-col gap-[6px]">
-                        <div class="flex items-center justify-end text-right gap-[6px]">
-                            <h1 class="font-semibold w-fit">Kol 2</h1>
-                        </div>
-                        <div class="flex items-center justify-end text-right gap-[2px]">
-                            <p class="text-sm leading-[21px] text-[#909DBF]">Galih</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </a>
