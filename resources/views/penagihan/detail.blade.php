@@ -95,7 +95,7 @@
                     Janji Bayar
                 </p>
                 <p class="text-base font-semibold text-gray-800">
-                    {{ $data->janji_bayar ? \Carbon\Carbon::parse($data->janji_bayar)->format('d/m/Y') : '-' }}
+                    {{ $data->janji_bayar ? \Carbon\Carbon::parse($data->janji_bayar)->format('d M Y') : '-' }}
                 </p>
             
                 @if ($data->janji_bayar)
@@ -109,7 +109,7 @@
                         @if ($diffInDaysFloat > 1)
                             {{ floor($diffInDaysFloat) }} hari lagi
                         @elseif ($diffInDaysFloat > 0)
-                            {{ $diffInHours }} jam lagi
+                            {{ number_format($diffInHours) }} jam lagi
                         @elseif ($diffInDaysFloat === 0)
                             Hari ini adalah tanggal janji bayar
                         @else
@@ -120,7 +120,7 @@
                             @if ($lateDays >= 1)
                                 Terlewat {{ $lateDays }} hari yang lalu
                             @else
-                                Terlewat {{ $lateHours }} jam yang lalu
+                                Terlewat {{ number_format($lateHours) }} jam yang lalu
                             @endif
                         @endif
                     </p>
