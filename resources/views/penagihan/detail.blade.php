@@ -100,19 +100,33 @@
             
                 @if ($data->janji_bayar)
                     @php
-                        $daysRemaining = \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($data->janji_bayar), false);
+                        $now = \Carbon\Carbon::now();
+                        $janjiBayar = \Carbon\Carbon::parse($data->janji_bayar);
+                        $diffInHours = $now->diffInHours($janjiBayar, false);
+                        $diffInDaysFloat = $now->diffInRealDays($janjiBayar, false);
                     @endphp
                     <p class="text-sm mt-1 text-gray-600">
-                        @if ($daysRemaining > 0)
-                            {{ $daysRemaining }} hari lagi.
-                        @elseif ($daysRemaining < 1 and $daysRemaining > 0)
-                            Hari ini adalah tanggal janji bayar {{ $daysRemaining }}
+                        @if ($diffInDaysFloat > 1)
+                            {{ floor($diffInDaysFloat) }} hari lagi
+                        @elseif ($diffInDaysFloat > 0)
+                            {{ $diffInHours }} jam lagi
+                        @elseif ($diffInDaysFloat === 0)
+                            Hari ini adalah tanggal janji bayar
                         @else
-                            Terlewat {{ abs($daysRemaining) }} hari yang lalu
+                            @php
+                                $lateHours = abs($diffInHours);
+                                $lateDays = abs(floor($diffInDaysFloat));
+                            @endphp
+                            @if ($lateDays >= 1)
+                                Terlewat {{ $lateDays }} hari yang lalu
+                            @else
+                                Terlewat {{ $lateHours }} jam yang lalu
+                            @endif
                         @endif
                     </p>
                 @endif
             </div>
+            
             
         </div>
 
