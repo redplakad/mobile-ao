@@ -4,14 +4,16 @@
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Support\Str;
+    use Illuminate\Database\Eloquent\SoftDeletes;
 
     class Penagihan extends Model
     {
-        use HasFactory;
+        use HasFactory, SoftDeletes;
 
         protected $table = 'penagihan';
 
         protected $fillable = [
+            'uudi',
             'lat',
             'lng',
             'nomor_kredit',
@@ -19,6 +21,7 @@
             'no_telepon',
             'address',
             'hasil_kunjungan',
+            'janji_bayar',
             'uraian_kunjungan',
             'image',
             'image1',
@@ -40,4 +43,7 @@
                 $penagihan->uuid = (string) Str::uuid();
             });
         }
+
+        protected $dates = ['deleted_at'];
+
     }

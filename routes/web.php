@@ -21,6 +21,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/penagihan/take', [PenagihanController::class, 'take'])->name('penagihan.take');
     Route::get('/penagihan/preview', [PenagihanController::class, 'preview'])->name('penagihan.take.preview');
     Route::get('/penagihan/detail/{uuid}', [PenagihanController::class, 'detail'])->name('penagihan.detail');
+    // routes/web.php
+    Route::get('/penagihan/{uuid}/edit', [PenagihanController::class, 'edit'])->name('penagihan.edit');
+    Route::put('/penagihan/{uuid}', [PenagihanController::class, 'update'])->name('penagihan.update');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

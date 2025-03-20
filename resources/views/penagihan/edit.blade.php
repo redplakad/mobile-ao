@@ -7,20 +7,21 @@
             </div>
         </a>
         <div class="flex flex-col w-fit text-center">
-            <h1 class="font-semibold text-lg leading-[27px]">Buat Penagihan</h1>
-            <p class="text-sm leading-[21px] text-[#909DBF]">Buat laporan penagihan baru</p>
+            <h1 class="font-semibold text-lg leading-[27px]">Edit Penagihan</h1>
+            <p class="text-sm leading-[21px] text-[#909DBF]">Ubah laporan penagihan</p>
         </div>
-        <a href="{{ route('front.index') }}" class="w-10 h-10 flex shrink-0">
-            <div class="w-10 h-10 flex shrink-0 ml-4">
-                <x-tabler-x />
-            </div>
+        <a href="{{ route('front.index') }}" class="w-10 h-10 flex shrink-0 ml-4">
+            <x-tabler-x />
         </a>
     </div>
+
     <div class="flex h-full flex-1 mt-5">
-        <form action="{{ route('penagihan.store') }}"
+        <form action="{{ route('penagihan.update', $penagihan->uuid) }}"
             class="w-full flex flex-col rounded-t-[10px] p-5 pt-[30px] gap-[26px] bg-white overflow-x-hidden mb-0 mt-auto"
             method="POST">
             @csrf
+            @method('PUT')
+
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
             <input type="hidden" id="image" name="image">
@@ -38,14 +39,8 @@
             <div class="flex flex-col gap-2">
                 <img alt="" id="image-preview" class="img-fluid rounded-2">
             </div>
-            <div class="flex flex-col item-center gap-2">
-                <a href="{{ route('penagihan.take') }}"
-                    class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
-                    <div class="w-6 h-6 flex shrink-0 mr-[10px]">
-                        <x-tabler-camera />
-                    </div>
-                    Ambil Foto Debitur
-                </a>
+            <div class="w-full">
+                <img src="{{ $penagihan->image }}" alt="Foto Penagihan" class="w-full h-auto object-cover shadow-sm" />
             </div>
             <div>
                 <label for="nomor_kredit" class="block text-sm font-medium leading-6 text-gray-900">Nomor Kredit</label>
@@ -58,10 +53,10 @@
                         </svg>
 
                     </div>
-                    <input type="text" name="nomor_kredit" id="nomor_kredit" value="{{ old('nama_debitur') }}"
+                    <input type="text" name="nomor_kredit" id="nomor_kredit" value="{{ old('nama_debitur', $penagihan->nomor_kredit) }}"
                         class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="007300012345" required disabled />
+                        placeholder="007300012345" required/>
                 </div>
             </div>
 
@@ -76,10 +71,10 @@
                         </svg>
 
                     </div>
-                    <input type="text" name="nama_debitur" id="nama_debitur" value="{{ old('nama_debitur') }}"
+                    <input type="text" name="nama_debitur" id="nama_debitur" value="{{ old('nama_debitur', $penagihan->nama_debitur) }}"
                         class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="Nama Lengkap" required disabled />
+                        placeholder="Nama Lengkap" required/>
                 </div>
             </div>
 
@@ -95,34 +90,20 @@
 
 
                     </div>
-                    <input type="text" name="no_telepon" id="no_telepon" value="{{ old('no_telepon') }}"
+                    <input type="text" name="no_telepon" id="no_telepon" value="{{ old('no_telepon', $penagihan->no_telepon) }}"
                         class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="081234567890" required disabled />
+                        placeholder="081234567890" required/>
                 </div>
             </div>
 
-            <div class="mb-4">
-                <label for="map" class="block text-sm font-medium text-gray-700">Lokasi Laporan</label>
-                <div id="map" class="w-full h-64 border border-gray-300 rounded-md"></div>
-            </div>
-
-            <div>
-                <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Alamat Lengkap</label>
-                <div class="mt-2">
-                    <textarea rows="4" name="address" id="address"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
-                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        required disabled>{{ old('address') }}</textarea>
-                </div>
-            </div>
             <div class="flex flex-col gap-2">
-                <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Hasil Kunjungan</label>
+                <h2 class="font-semibold">Hasil Kunjungan</h2>
                 <div class="flex items-center gap-2">
                     <!-- Option: Bayar -->
                     <label class="group relative cursor-pointer">
                         <input type="radio" name="hasil_kunjungan" value="Bayar" class="sr-only peer"
-                            {{ old('hasil_kunjungan') == 'Bayar' ? 'checked' : '' }} required disabled>
+                            {{ old('hasil_kunjungan', $penagihan->hasil_kunjungan) == 'Bayar' ? 'checked' : '' }} required>
                         <div
                             class="rounded-full border border-[#E9E8ED] px-5 py-3 font-semibold transition-all duration-300 bg-white text-[#333]
                                    peer-checked:bg-[#5B86EF] peer-checked:text-white
@@ -134,7 +115,7 @@
                     <!-- Option: Tidak Bayar -->
                     <label class="group relative cursor-pointer">
                         <input type="radio" name="hasil_kunjungan" value="Tidak Bayar" class="sr-only peer"
-                            {{ old('hasil_kunjungan') == 'Tidak Bayar' ? 'checked' : '' }} required disabled>
+                            {{ old('hasil_kunjungan', $penagihan->hasil_kunjungan) == 'Tidak Bayar' ? 'checked' : '' }} required>
                         <div
                             class="rounded-full border border-[#E9E8ED] px-5 py-3 font-semibold transition-all duration-300 bg-white text-[#333]
                                    peer-checked:bg-[#5B86EF] peer-checked:text-white
@@ -144,18 +125,17 @@
                     </label>
                 </div>
             </div>
-
             <div class="flex flex-col gap-2">
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Janji Bayar?</label>
                 <div class="flex items-center gap-2">
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ old('is_janji_bayar') === 'iya' ? 'checked' : '' }}>
+                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ !empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
                         <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Iya
                         </div>
                     </label>
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" {{ old('is_janji_bayar') === 'tidak' ? 'checked' : '' }}>
+                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" { {{ empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
                         <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Tidak
                         </div>
@@ -167,9 +147,10 @@
             <div id="janjiBayarContainer" class="mt-4 hidden">
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Tanggal Janji Bayar</label>
                 <input type="date" name="janji_bayar" id="janji_bayar"
-                       value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
-                       class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+                        value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
+                        class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
             </div>
+
 
 
             <div>
@@ -178,22 +159,20 @@
                     <textarea rows="4" name="uraian_kunjungan" id="address"
                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="Deskripsikan hasil kunjungan." required disabled>{{ old('uraian_kunjungan') }}</textarea>
+                        placeholder="Deskripsikan hasil kunjungan." required>{{ old('uraian_kunjungan', $penagihan->uraian_kunjungan) }}</textarea>
                 </div>
             </div>
 
             <div id="CTA" class="w-full flex items-center justify-between bg-white">
                 <button type="submit"
                     class="w-full inline-flex items-center justify-center gap-x-2 rounded-full bg-blue-600 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200 ease-in-out
-                            disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-70"
-                    disabled>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                    </svg>
+                            disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-70">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                              </svg>
+                              
 
-                    Simpan Penagihan
+                    Simpan Perubahan
                 </button>
 
 
@@ -201,81 +180,12 @@
         </form>
     </div>
 @endsection
-
 @push('javascript')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ asset('js/booking.js') }}"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            const imagePreview = document.getElementById("image-preview");
-            const image = document.getElementById("image");
-            const latInput = document.getElementById("lat");
-            const lngInput = document.getElementById("lng");
-            const addressInput = document.getElementById("address");
-
-            // Periksa apakah ada gambar di localStorage
-            const storedImage = localStorage.getItem("image");
-
-            if (storedImage != null) {
-                image.value = storedImage;
-
-                console.log(image.value);
-                document.querySelectorAll('input, textarea, button').forEach(el => {
-                    el.disabled = false;
-                });
-            }
-            // Jika ada gambar, gunakan gambar tersebut; jika tidak, gunakan placeholder
-            image.value = storedImage;
-            imagePreview.src = storedImage ? storedImage :
-                "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
-
-            if (!navigator.geolocation) {
-                console.error("Geolocation is not supported by this browser.");
-                return;
-            }
-
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const {
-                    latitude: lat,
-                    longitude: lng
-                } = position.coords;
-                latInput.value = lat;
-                lngInput.value = lng;
-
-                // Inisialisasi peta
-                const map = L.map("map").setView([lat, lng], 13);
-                L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                    attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors",
-                    maxZoom: 18,
-                }).addTo(map);
-
-                const marker = L.marker([lat, lng]).addTo(map);
-
-                // Ambil alamat dari koordinat
-                fetchReverseGeocoding(lat, lng, marker, addressInput);
-            }, (error) => {
-                console.error("Geolocation error:", error.message);
-            });
-        });
-
-        async function fetchReverseGeocoding(lat, lng, marker, addressInput) {
-            try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-                );
-                const data = await response.json();
-
-                if (data.display_name) {
-                    addressInput.value = data.display_name;
-                    marker.bindPopup(`<b>Lokasi Laporan</b><br />Kamu berada di ${data.display_name}`).openPopup();
-                }
-            } catch (error) {
-                console.error("Error fetching reverse geocoding data:", error);
-            }
-        }
-
         document.addEventListener("DOMContentLoaded", function () {
         const radioIya = document.querySelector('input[name="is_janji_bayar"][value="iya"]');
         const radioTidak = document.querySelector('input[name="is_janji_bayar"][value="tidak"]');
