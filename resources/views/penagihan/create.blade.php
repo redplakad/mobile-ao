@@ -35,9 +35,13 @@
                 </div>
             @endif
 
-            <div class="flex flex-col gap-2">
-                <img alt="" id="image-preview" class="img-fluid rounded-2">
+            <div class="flex gap-1">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 1" id="imagePreview1">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 2" id="imagePreview2">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 3" id="imagePreview3">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 4" id="imagePreview4">
             </div>
+            
             <div class="flex flex-col item-center gap-2">
                 <a href="{{ route('penagihan.take') }}"
                     class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
@@ -149,13 +153,13 @@
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Janji Bayar?</label>
                 <div class="flex items-center gap-2">
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ old('is_janji_bayar') === 'iya' ? 'checked' : '' }}>
+                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ old('is_janji_bayar') === 'iya' ? 'checked' : '' }} disabled>
                         <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Iya
                         </div>
                     </label>
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" {{ old('is_janji_bayar') === 'tidak' ? 'checked' : '' }}>
+                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" {{ old('is_janji_bayar') === 'tidak' ? 'checked' : '' }} disabled>
                         <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Tidak
                         </div>
@@ -209,27 +213,29 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            const imagePreview = document.getElementById("image-preview");
             const image = document.getElementById("image");
             const latInput = document.getElementById("lat");
             const lngInput = document.getElementById("lng");
             const addressInput = document.getElementById("address");
+            const imagePreview1 = document.getElementById("imagePreview1");
 
             // Periksa apakah ada gambar di localStorage
-            const storedImage = localStorage.getItem("image");
+            
+            for (let i = 1; i <= 4; i++) {
+                const storedImage = localStorage.getItem(`image${i}`);
+                const imagePreview = document.getElementById(`imagePreview${i}`);
 
-            if (storedImage != null) {
-                image.value = storedImage;
+                if (imagePreview) {
+                    imagePreview.src = storedImage ?? "{{ asset('assets/images/icons/placeholder.webp') }}";
+                }
 
-                console.log(image.value);
-                document.querySelectorAll('input, textarea, button').forEach(el => {
-                    el.disabled = false;
-                });
+                if (storedImage) {
+                    // Aktifkan semua input, textarea, dan button jika gambar tersedia
+                    document.querySelectorAll('input, textarea, button').forEach(el => {
+                        el.disabled = false;
+                    });
+                }
             }
-            // Jika ada gambar, gunakan gambar tersebut; jika tidak, gunakan placeholder
-            image.value = storedImage;
-            imagePreview.src = storedImage ? storedImage :
-                "{{ env('APP_URL') }}/assets/images/icons/placeholder.webp";
 
             if (!navigator.geolocation) {
                 console.error("Geolocation is not supported by this browser.");

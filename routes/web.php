@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/penagihan/create', [PenagihanController::class, 'store'])->name('penagihan.store');
     Route::get('/penagihan/take', [PenagihanController::class, 'take'])->name('penagihan.take');
     Route::get('/penagihan/preview', [PenagihanController::class, 'preview'])->name('penagihan.take.preview');
+    Route::get('/penagihan/snapshot/{image}', [PenagihanController::class, 'snapshot'])->name('penagihan.snapshot');
     Route::get('/penagihan/detail/{uuid}', [PenagihanController::class, 'detail'])->name('penagihan.detail');
     // routes/web.php
     Route::get('/penagihan/{uuid}/edit', [PenagihanController::class, 'edit'])->name('penagihan.edit');
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

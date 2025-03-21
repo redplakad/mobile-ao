@@ -100,5 +100,10 @@ class PenagihanController extends Controller
     
         return redirect()->route('penagihan.index')->with('success', 'Data penagihan berhasil diperbarui.');
     }
+
+    public function snapshot($image)
+    {
+        return view('penagihan.snapshot', ['image' => $image]);
+    }
     
 }

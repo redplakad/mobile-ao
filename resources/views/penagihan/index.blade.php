@@ -83,6 +83,9 @@
 @endsection
 @push("javascript")
     <script>
-        localStorage.removeItem("image");
+        localStorage.removeItem("image1");
+        localStorage.removeItem("image2");
+        localStorage.removeItem("image3");
+        localStorage.removeItem("image4");
     </script>
 @endpush

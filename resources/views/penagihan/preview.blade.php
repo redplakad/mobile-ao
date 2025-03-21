@@ -26,7 +26,7 @@
 
 @push('javascript')
     <script>
-        var image = localStorage.getItem('image');
+        var image = localStorage.getItem('image1');
         var imagePreview = document.getElementById('image-preview');
         imagePreview.src = image;
     </script>
