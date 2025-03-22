@@ -42,3 +42,8 @@ h-8{
     font-size: 16px;
     cursor: pointer;
 }
+
+.active-thumb {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 1); /* fallback ring-blue-500 */
+    border-radius: 0.5rem;
+}

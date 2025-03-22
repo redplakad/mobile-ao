@@ -16,7 +16,7 @@
                 $table->string('no_telepon');
                 $table->text('address');
                 $table->string('hasil_kunjungan');
-                $table->date('janji_bayar');
+                $table->date('janji_bayar')->nullable();
                 $table->text('uraian_kunjungan');
                 $table->longText('image')->nullable();
                 $table->longText('image1')->nullable();

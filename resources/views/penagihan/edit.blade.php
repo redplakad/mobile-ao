@@ -1,7 +1,7 @@
 @extends('layouts.second')
 @section('content')
     <div id="Top-nav" class="flex items-center justify-between px-4 pt-10">
-        <a href="{{ route('penagihan.index') }}">
+        <a href="{{ route('penagihan.detail', $penagihan->uuid) }}">
             <div class="w-10 h-10 flex shrink-0">
                 <x-tabler-arrow-narrow-left />
             </div>
@@ -24,7 +24,11 @@
 
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
-            <input type="hidden" id="image" name="image">
+            <input type="hidden" id="image1" name="image">
+            <input type="hidden" id="image2" name="image1">
+            <input type="hidden" id="image3" name="image2">
+            <input type="hidden" id="image4" name="image3">
+            
             @if ($errors->any())
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4" role="alert">
                     <p class="font-bold">Terjadi kesalahan:</p>
@@ -36,9 +40,23 @@
                 </div>
             @endif
 
-            <div class="flex flex-col gap-2">
-                <img alt="" id="image-preview" class="img-fluid rounded-2">
+            <div class="flex gap-1">
+                <img src="{{ !empty($penagihan->image) ? $penagihan->image : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 1" id="imagePreview1">
+                <img src="{{ !empty($penagihan->image1) ? $penagihan->image1: asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 2" id="imagePreview2">
+                <img src="{{ !empty($penagihan->image2) ? $penagihan->image2 : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 3" id="imagePreview3">
+                <img src="{{ !empty($penagihan->image3) ? $penagihan->image3 : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 4" id="imagePreview4">
             </div>
+            
+            <div class="flex flex-col item-center gap-2">
+                <a href="{{ route('penagihan.take', ['edit' => $penagihan->uuid]) }}"
+                    class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
+                    <div class="w-6 h-6 flex shrink-0 mr-[10px]">
+                        <x-tabler-camera />
+                    </div>
+                    Foto Penagihan
+                </a>
+            </div>
+
             <div class="w-full">
                 <img src="{{ $penagihan->image }}" alt="Foto Penagihan" class="w-full h-auto object-cover shadow-sm" />
             </div>

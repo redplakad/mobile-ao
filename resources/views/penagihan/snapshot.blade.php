@@ -2,8 +2,27 @@
 
 @section('content')
 <div class="max-w-screen-sm mx-auto min-h-screen bg-white p-4 flex flex-col items-center justify-center gap-4">
+    @php
+        switch ($image) {
+            case 1:
+                $description = 'Foto Debitur';
+                break;
+            case 2:
+                $description = 'Foto Lokasi Penagihan';
+                break;
+            case 3:
+                $description = 'Foto Debitur & Petugas';
+                break;
+            case 4:
+                $description = 'Foto Lainnya';
+                break;
+            default:
+                $description = 'Foto';
+                break;
+        }
+    @endphp
 
-    <h2 class="text-lg font-bold text-center">Ambil Gambar</h2>
+    <h2 class="text-lg font-bold text-center">{{ $description }}</h2>
 
     <video id="video" autoplay playsinline class="w-full max-w-sm rounded-lg shadow border border-gray-200"></video>
     <canvas id="canvas" class="hidden"></canvas>
@@ -73,7 +92,7 @@
         alert("Foto berhasil diambil!");
 
         // Redirect balik ke halaman preview
-        window.location.href = "{{ route('penagihan.take') }}";
+        window.location.href = "{{ route('penagihan.take') }}" + "{{ request()->has('edit') ? '?edit=' . request('edit') : '' }}";
     });
 
     window.addEventListener('DOMContentLoaded', startCamera);

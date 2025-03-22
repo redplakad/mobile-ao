@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/penagihan/preview', [PenagihanController::class, 'preview'])->name('penagihan.take.preview');
     Route::get('/penagihan/snapshot/{image}', [PenagihanController::class, 'snapshot'])->name('penagihan.snapshot');
     Route::get('/penagihan/detail/{uuid}', [PenagihanController::class, 'detail'])->name('penagihan.detail');
+    Route::delete('/penagihan/{uuid}', [PenagihanController::class, 'destroy'])->name('penagihan.destroy');
+
     // routes/web.php
     Route::get('/penagihan/{uuid}/edit', [PenagihanController::class, 'edit'])->name('penagihan.edit');
     Route::put('/penagihan/{uuid}', [PenagihanController::class, 'update'])->name('penagihan.update');

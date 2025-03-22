@@ -2,7 +2,7 @@
 
 @section('content')
 <div id="Top-nav" class="flex items-center justify-between px-4 pt-10">
-    <a href="{{ route('penagihan.create') }}">
+    <a href="{{ isset($_REQUEST['edit']) ? route('penagihan.edit', $_REQUEST['edit']) : route('penagihan.create') }}">
         <div class="w-10 h-10 flex shrink-0">
             <x-tabler-arrow-narrow-left />
         </div>
@@ -35,16 +35,16 @@
              class="w-full max-w-sm h-auto object-cover rounded-lg shadow-sm border border-gray-100"
              src="{{ asset('assets/images/icons/placeholder.webp') }}"
              alt="{{ $item['alt'] }}">
-        <a href="{{ route('penagihan.snapshot', ['image' => $item['id']]) }}"
-           class="inline-flex items-center justify-center w-full rounded-full ring-1 ring-[#E9E8ED] px-4 py-2 bg-white transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FF8E62] font-bold hover:bg-gray-50">
-            <span class="mr-2"><x-tabler-camera /></span>
-            Ambil Foto
-        </a>
+             <a href="{{ route('penagihan.snapshot', ['image' => $item['id']]) }}{{ isset($_REQUEST['edit']) ? '?edit='.$_REQUEST['edit'] : '' }}"
+                class="inline-flex items-center justify-center w-full rounded-full ring-1 ring-[#E9E8ED] px-4 py-2 bg-white transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FF8E62] font-bold hover:bg-gray-50">
+                 <span class="mr-2"><x-tabler-camera /></span>
+                 Ambil Foto
+             </a>
     </div>
     @endforeach
-    <a href="{{ route('penagihan.snapshot', ['image' => $item['id']]) }}"
+    <a href="{{ isset($_REQUEST['edit']) ? route('penagihan.edit', $_REQUEST['edit']) : route('penagihan.create') }}"
         class="inline-flex items-center justify-center w-full rounded-full ring-1 ring-[#E9E8ED] px-4 py-2 bg-white transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FF8E62] font-bold hover:bg-gray-50">
-         <span class="mr-2"><x-tabler-camera /></span>
+         <span class="mr-2"><x-tabler-arrow-narrow-left /></span>
          Kembali
     </a>
 

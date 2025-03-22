@@ -11,8 +11,11 @@ class PenagihanController extends Controller
 {
     public function index()
     {
-        $penagihan = Penagihan::latest()->paginate(10); // 10 data per halaman
-        return view("penagihan.index", compact("penagihan"));
+        $penagihan = Penagihan::whereNull('deleted_at')
+            ->latest()
+            ->paginate(10);
+    
+        return view('penagihan.index', compact('penagihan'));
     }
 
     public function create()
@@ -33,7 +36,6 @@ class PenagihanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "image" => "required",
             "lat" => "required|numeric",
             "lng" => "required|numeric",
             "nomor_kredit" => "required|numeric|min:10",
@@ -100,6 +102,17 @@ class PenagihanController extends Controller
     
         return redirect()->route('penagihan.index')->with('success', 'Data penagihan berhasil diperbarui.');
     }
+    public function destroy($uuid)
+    {
+        $penagihan = Penagihan::where('uuid', $uuid)->firstOrFail();
+
+        // Soft delete jika model pakai SoftDeletes
+        $penagihan->delete();
+
+        return redirect()->route('penagihan.index')
+            ->with('success', 'Data penagihan berhasil dihapus.');
+    }
+
 
     public function snapshot($image)
     {

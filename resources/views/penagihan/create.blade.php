@@ -23,7 +23,10 @@
             @csrf
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
-            <input type="hidden" id="image" name="image">
+            <input type="hidden" id="image1" name="image">
+            <input type="hidden" id="image2" name="image1">
+            <input type="hidden" id="image3" name="image2">
+            <input type="hidden" id="image4" name="image3">
             @if ($errors->any())
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4" role="alert">
                     <p class="font-bold">Terjadi kesalahan:</p>
@@ -48,7 +51,7 @@
                     <div class="w-6 h-6 flex shrink-0 mr-[10px]">
                         <x-tabler-camera />
                     </div>
-                    Ambil Foto Debitur
+                    Foto Penagihan
                 </a>
             </div>
             <div>
@@ -235,6 +238,20 @@
                         el.disabled = false;
                     });
                 }
+            }
+
+            const image1 = localStorage.getItem('image1');
+            const image2 = localStorage.getItem('image2');
+            const image3 = localStorage.getItem('image3');
+            const image4 = localStorage.getItem('image4');
+
+            // Cek apakah semua image ada nilainya
+            if (image1 || image2 || image3 || image4) {
+                // Set input hidden
+                document.getElementById('image1').value = image1;
+                document.getElementById('image2').value = image2;
+                document.getElementById('image3').value = image3;
+                document.getElementById('image4').value = image4;
             }
 
             if (!navigator.geolocation) {
