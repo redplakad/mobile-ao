@@ -6,6 +6,7 @@ use App\Models\Penagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PenagihanController extends Controller
 {
@@ -25,8 +26,15 @@ class PenagihanController extends Controller
 
     public function take()
     {
-        return view("penagihan.take");
+        $penagihan = null;
+    
+        if (request()->has('edit') && Str::isUuid(request('edit'))) {
+            $penagihan = Penagihan::where('uuid', request('edit'))->first();
+        }
+    
+        return view("penagihan.take", compact('penagihan'));
     }
+    
 
     public function preview()
     {
@@ -93,15 +101,28 @@ class PenagihanController extends Controller
             "nama_debitur" => "required|string|min:3",
             "no_telepon" => ["required", 'regex:/^0[0-9]{7,}$/'],
             "hasil_kunjungan" => "required|string",
-            "janji_bayar" => "required|string",
             "uraian_kunjungan" => "required|string|min:10",
         ]);
     
         $penagihan = Penagihan::where('uuid', $uuid)->firstOrFail();
+    
+        // Update kolom tambahan jika ada perubahan
+        $extraFields = ['image', 'image1', 'image2', 'image3', 'janji_bayar'];
+        foreach ($extraFields as $field) {
+            if ($request->filled($field) && $request->$field !== $penagihan->$field) {
+                $validated[$field] = $request->$field;
+            }
+        }
+    
         $penagihan->update($validated);
     
-        return redirect()->route('penagihan.index')->with('success', 'Data penagihan berhasil diperbarui.');
+        return redirect()
+            ->route('penagihan.detail', $uuid)
+            ->with('showSuccessModal', true); // ⬅ ini akan trigger modal di halaman detail
     }
+    
+    
+
     public function destroy($uuid)
     {
         $penagihan = Penagihan::where('uuid', $uuid)->firstOrFail();

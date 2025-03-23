@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="store-list.html" class="card-services">
+                <a href="{{ route('pages.404') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="store-list.html" class="card-services">
+                <a href="{{ route('pages.404') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="store-list.html" class="card-services">
+                <a href="{{ route('pages.404') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="store-list.html" class="card-services">
+                <a href="{{ route('pages.404') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="store-list.html" class="card-services">
+                <a href="{{ route('pages.404') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">

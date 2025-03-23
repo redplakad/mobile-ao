@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\PenagihanController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Penagihan;
+use App\Http\Controllers\NominatifImportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,8 +31,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');    
+
+    // route import nominatif
+    Route::get('/nominatif/import', [NominatifImportController::class, 'form'])->name('nominatif.import.form');
+    Route::post('/nominatif/import', [NominatifImportController::class, 'import'])->name('nominatif.import.process');
     
 });
+Route::get('/404', [ErrorController::class, 'notFound'])->name('pages.404');
 
 require __DIR__.'/auth.php';

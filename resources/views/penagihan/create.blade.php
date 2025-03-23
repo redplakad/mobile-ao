@@ -27,6 +27,7 @@
             <input type="hidden" id="image2" name="image1">
             <input type="hidden" id="image3" name="image2">
             <input type="hidden" id="image4" name="image3">
+
             @if ($errors->any())
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4" role="alert">
                     <p class="font-bold">Terjadi kesalahan:</p>
@@ -39,12 +40,16 @@
             @endif
 
             <div class="flex gap-1">
-                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 1" id="imagePreview1">
-                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 2" id="imagePreview2">
-                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 3" id="imagePreview3">
-                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 4" id="imagePreview4">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 1"
+                    id="imagePreview1">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 2"
+                    id="imagePreview2">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 3"
+                    id="imagePreview3">
+                <img src="{{ asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 4"
+                    id="imagePreview4">
             </div>
-            
+
             <div class="flex flex-col item-center gap-2">
                 <a href="{{ route('penagihan.take') }}"
                     class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
@@ -156,26 +161,30 @@
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Janji Bayar?</label>
                 <div class="flex items-center gap-2">
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ old('is_janji_bayar') === 'iya' ? 'checked' : '' }} disabled>
-                        <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
+                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer"
+                            {{ old('is_janji_bayar') === 'iya' ? 'checked' : '' }} disabled>
+                        <div
+                            class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Iya
                         </div>
                     </label>
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" {{ old('is_janji_bayar') === 'tidak' ? 'checked' : '' }} disabled>
-                        <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
+                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer"
+                            {{ old('is_janji_bayar') === 'tidak' ? 'checked' : '' }} disabled>
+                        <div
+                            class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Tidak
                         </div>
                     </label>
                 </div>
             </div>
-            
+
             {{-- Field Janji Bayar Date --}}
             <div id="janjiBayarContainer" class="mt-4 hidden">
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Tanggal Janji Bayar</label>
                 <input type="date" name="janji_bayar" id="janji_bayar"
-                       value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
-                       class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+                    value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
+                    class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
             </div>
 
 
@@ -223,7 +232,7 @@
             const imagePreview1 = document.getElementById("imagePreview1");
 
             // Periksa apakah ada gambar di localStorage
-            
+
             for (let i = 1; i <= 4; i++) {
                 const storedImage = localStorage.getItem(`image${i}`);
                 const imagePreview = document.getElementById(`imagePreview${i}`);
@@ -299,26 +308,26 @@
             }
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-        const radioIya = document.querySelector('input[name="is_janji_bayar"][value="iya"]');
-        const radioTidak = document.querySelector('input[name="is_janji_bayar"][value="tidak"]');
-        const janjiBayarContainer = document.getElementById("janjiBayarContainer");
+        document.addEventListener("DOMContentLoaded", function() {
+            const radioIya = document.querySelector('input[name="is_janji_bayar"][value="iya"]');
+            const radioTidak = document.querySelector('input[name="is_janji_bayar"][value="tidak"]');
+            const janjiBayarContainer = document.getElementById("janjiBayarContainer");
 
-        function toggleJanjiBayarField() {
-            if (radioIya.checked) {
-                janjiBayarContainer.classList.remove('hidden');
-            } else {
-                janjiBayarContainer.classList.add('hidden');
+            function toggleJanjiBayarField() {
+                if (radioIya.checked) {
+                    janjiBayarContainer.classList.remove('hidden');
+                } else {
+                    janjiBayarContainer.classList.add('hidden');
+                }
             }
-        }
 
-        if (radioIya && radioTidak) {
-            radioIya.addEventListener('change', toggleJanjiBayarField);
-            radioTidak.addEventListener('change', toggleJanjiBayarField);
+            if (radioIya && radioTidak) {
+                radioIya.addEventListener('change', toggleJanjiBayarField);
+                radioTidak.addEventListener('change', toggleJanjiBayarField);
 
-            // Initial toggle on page load
-            toggleJanjiBayarField();
-        }
-    });
+                // Initial toggle on page load
+                toggleJanjiBayarField();
+            }
+        });
     </script>
 @endpush

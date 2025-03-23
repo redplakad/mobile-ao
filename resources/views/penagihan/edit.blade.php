@@ -24,10 +24,19 @@
 
             <input type="hidden" id="lat" name="lat">
             <input type="hidden" id="lng" name="lng">
-            <input type="hidden" id="image1" name="image">
-            <input type="hidden" id="image2" name="image1">
-            <input type="hidden" id="image3" name="image2">
-            <input type="hidden" id="image4" name="image3">
+            @php
+                $imageColumnMap = [
+                    1 => 'image',
+                    2 => 'image1',
+                    3 => 'image2',
+                    4 => 'image3',
+                ];
+            @endphp
+            
+            <input type="hidden" id="image1" name="image" value="{{ $penagihan->{$imageColumnMap[1]} ?? '' }}">
+            <input type="hidden" id="image2" name="image1" value="{{ $penagihan->{$imageColumnMap[2]} ?? '' }}">
+            <input type="hidden" id="image3" name="image2" value="{{ $penagihan->{$imageColumnMap[3]} ?? '' }}">
+            <input type="hidden" id="image4" name="image3" value="{{ $penagihan->{$imageColumnMap[4]} ?? '' }}">
             
             @if ($errors->any())
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-4" role="alert">
@@ -41,12 +50,16 @@
             @endif
 
             <div class="flex gap-1">
-                <img src="{{ !empty($penagihan->image) ? $penagihan->image : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 1" id="imagePreview1">
-                <img src="{{ !empty($penagihan->image1) ? $penagihan->image1: asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 2" id="imagePreview2">
-                <img src="{{ !empty($penagihan->image2) ? $penagihan->image2 : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 3" id="imagePreview3">
-                <img src="{{ !empty($penagihan->image3) ? $penagihan->image3 : asset('assets/images/icons/placeholder.webp') }}" class="w-16 h-16 object-cover" alt="Image 4" id="imagePreview4">
+                <img data-default="{{ !empty($penagihan->image) ? $penagihan->image : asset('assets/images/icons/placeholder.webp') }}"
+                    class="w-16 h-16 object-cover" alt="Image 1" id="imagePreview1">
+                <img data-default="{{ !empty($penagihan->image1) ? $penagihan->image1 : asset('assets/images/icons/placeholder.webp') }}"
+                    class="w-16 h-16 object-cover" alt="Image 2" id="imagePreview2">
+                <img data-default="{{ !empty($penagihan->image2) ? $penagihan->image2 : asset('assets/images/icons/placeholder.webp') }}"
+                    class="w-16 h-16 object-cover" alt="Image 3" id="imagePreview3">
+                <img data-default="{{ !empty($penagihan->image3) ? $penagihan->image3 : asset('assets/images/icons/placeholder.webp') }}"
+                    class="w-16 h-16 object-cover" alt="Image 4" id="imagePreview4">
             </div>
-            
+
             <div class="flex flex-col item-center gap-2">
                 <a href="{{ route('penagihan.take', ['edit' => $penagihan->uuid]) }}"
                     class="rounded-full flex ring-1 ring-[#E9E8ED] p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62] justify-center font-bold">
@@ -57,44 +70,55 @@
                 </a>
             </div>
 
-            <div class="w-full">
-                <img src="{{ $penagihan->image }}" alt="Foto Penagihan" class="w-full h-auto object-cover shadow-sm" />
-            </div>
             <div>
                 <label for="nomor_kredit" class="block text-sm font-medium leading-6 text-gray-900">Nomor Kredit</label>
                 <div class="relative mt-2 rounded-full shadow-sm">
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
-                        </svg>
-
+                        <!-- SVG ICON -->
                     </div>
-                    <input type="text" name="nomor_kredit" id="nomor_kredit" value="{{ old('nama_debitur', $penagihan->nomor_kredit) }}"
-                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
-                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="007300012345" required/>
+            
+                    @if(request()->routeIs('penagihan.edit'))
+                        <!-- disabled input (hanya tampilan) -->
+                        <input type="text" id="nomor_kredit_display"
+                            value="{{ old('nomor_kredit', $penagihan->nomor_kredit) }}" disabled
+                            class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70" />
+            
+                        <!-- hidden input untuk dikirim ke server -->
+                        <input type="hidden" name="nomor_kredit"
+                            value="{{ old('nomor_kredit', $penagihan->nomor_kredit) }}">
+                    @else
+                        <input type="text" name="nomor_kredit" id="nomor_kredit"
+                            value="{{ old('nomor_kredit', $penagihan->nomor_kredit) }}"
+                            class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            placeholder="007300012345" required />
+                    @endif
                 </div>
             </div>
-
+            
             <div>
                 <label for="nama_debitur" class="block text-sm font-medium leading-6 text-gray-900">Nama Debitur</label>
                 <div class="relative mt-2 rounded-full shadow-sm">
                     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                        </svg>
-
+                        <!-- SVG ICON -->
                     </div>
-                    <input type="text" name="nama_debitur" id="nama_debitur" value="{{ old('nama_debitur', $penagihan->nama_debitur) }}"
-                        class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
-                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="Nama Lengkap" required/>
+            
+                    @if(request()->routeIs('penagihan.edit'))
+                        <input type="text" id="nama_debitur_display"
+                            value="{{ old('nama_debitur', $penagihan->nama_debitur) }}" disabled
+                            class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
+                                disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70" />
+                        <input type="hidden" name="nama_debitur"
+                            value="{{ old('nama_debitur', $penagihan->nama_debitur) }}">
+                    @else
+                        <input type="text" name="nama_debitur" id="nama_debitur"
+                            value="{{ old('nama_debitur', $penagihan->nama_debitur) }}"
+                            class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            placeholder="Nama Lengkap" required />
+                    @endif
                 </div>
             </div>
+            
 
             <div>
                 <label for="no_telepon" class="block text-sm font-medium leading-6 text-gray-900">No Telepon</label>
@@ -108,10 +132,11 @@
 
 
                     </div>
-                    <input type="text" name="no_telepon" id="no_telepon" value="{{ old('no_telepon', $penagihan->no_telepon) }}"
+                    <input type="text" name="no_telepon" id="no_telepon"
+                        value="{{ old('no_telepon', $penagihan->no_telepon) }}"
                         class="block w-full rounded-full border-0 py-4 pl-12 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6
                                 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed disabled:ring-gray-200 disabled:opacity-70"
-                        placeholder="081234567890" required/>
+                        placeholder="081234567890" required />
                 </div>
             </div>
 
@@ -133,7 +158,8 @@
                     <!-- Option: Tidak Bayar -->
                     <label class="group relative cursor-pointer">
                         <input type="radio" name="hasil_kunjungan" value="Tidak Bayar" class="sr-only peer"
-                            {{ old('hasil_kunjungan', $penagihan->hasil_kunjungan) == 'Tidak Bayar' ? 'checked' : '' }} required>
+                            {{ old('hasil_kunjungan', $penagihan->hasil_kunjungan) == 'Tidak Bayar' ? 'checked' : '' }}
+                            required>
                         <div
                             class="rounded-full border border-[#E9E8ED] px-5 py-3 font-semibold transition-all duration-300 bg-white text-[#333]
                                    peer-checked:bg-[#5B86EF] peer-checked:text-white
@@ -147,26 +173,30 @@
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Janji Bayar?</label>
                 <div class="flex items-center gap-2">
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer" {{ !empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
-                        <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
+                        <input type="radio" name="is_janji_bayar" value="iya" class="sr-only peer"
+                            {{ !empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
+                        <div
+                            class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Iya
                         </div>
                     </label>
                     <label class="group relative cursor-pointer">
-                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" { {{ empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
-                        <div class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
+                        <input type="radio" name="is_janji_bayar" value="tidak" class="sr-only peer" {
+                            {{ empty(old('is_janji_bayar', $penagihan->janji_bayar)) ? 'checked' : '' }}>
+                        <div
+                            class="rounded-full border px-5 py-3 font-semibold transition-all peer-checked:bg-[#5B86EF] peer-checked:text-white">
                             Tidak
                         </div>
                     </label>
                 </div>
             </div>
-            
+
             {{-- Field Janji Bayar Date --}}
             <div id="janjiBayarContainer" class="mt-4 hidden">
                 <label for="janji_bayar" class="block text-sm font-medium text-gray-900">Tanggal Janji Bayar</label>
                 <input type="date" name="janji_bayar" id="janji_bayar"
-                        value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
-                        class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
+                    value="{{ old('janji_bayar', isset($penagihan) ? $penagihan->janji_bayar : '') }}"
+                    class="block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:ring-blue-600 focus:border-blue-600 sm:text-sm">
             </div>
 
 
@@ -185,10 +215,12 @@
                 <button type="submit"
                     class="w-full inline-flex items-center justify-center gap-x-2 rounded-full bg-blue-600 px-3.5 py-4 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-200 ease-in-out
                             disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-70">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                              </svg>
-                              
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    </svg>
+
 
                     Simpan Perubahan
                 </button>
@@ -204,26 +236,57 @@
     <script src="{{ asset('js/booking.js') }}"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-        const radioIya = document.querySelector('input[name="is_janji_bayar"][value="iya"]');
-        const radioTidak = document.querySelector('input[name="is_janji_bayar"][value="tidak"]');
-        const janjiBayarContainer = document.getElementById("janjiBayarContainer");
+        document.addEventListener("DOMContentLoaded", function() {
+            const radioIya = document.querySelector('input[name="is_janji_bayar"][value="iya"]');
+            const radioTidak = document.querySelector('input[name="is_janji_bayar"][value="tidak"]');
+            const janjiBayarContainer = document.getElementById("janjiBayarContainer");
 
-        function toggleJanjiBayarField() {
-            if (radioIya.checked) {
-                janjiBayarContainer.classList.remove('hidden');
-            } else {
-                janjiBayarContainer.classList.add('hidden');
+            function toggleJanjiBayarField() {
+                if (radioIya.checked) {
+                    janjiBayarContainer.classList.remove('hidden');
+                } else {
+                    janjiBayarContainer.classList.add('hidden');
+                }
+            }
+
+            if (radioIya && radioTidak) {
+                radioIya.addEventListener('change', toggleJanjiBayarField);
+                radioTidak.addEventListener('change', toggleJanjiBayarField);
+
+                // Initial toggle on page load
+                toggleJanjiBayarField();
+            }
+        });
+    </script>
+
+    {{-- Script untuk cek image local --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const defaultImage = "{{ asset('assets/images/icons/placeholder.webp') }}";
+
+            for (let i = 1; i <= 4; i++) {
+                const imgEl = document.getElementById('imagePreview' + i);
+                const localImg = localStorage.getItem('image' + (i)); // image0 to image3
+
+                if (localImg) {
+                    imgEl.src = localImg;
+                } else if (imgEl.dataset.default) {
+                    imgEl.src = imgEl.dataset.default;
+                } else {
+                    imgEl.src = defaultImage;
+                }
+            }
+        });
+    </script>
+
+    {{-- Pengecekan image untuk hidden input --}}
+    <script>
+        for (let i = 1; i <= 4; i++) {
+            const localImage = localStorage.getItem('image' + i);
+            const inputEl = document.getElementById('image' + i);
+            if (localImage && inputEl) {
+                inputEl.value = localImage;
             }
         }
-
-        if (radioIya && radioTidak) {
-            radioIya.addEventListener('change', toggleJanjiBayarField);
-            radioTidak.addEventListener('change', toggleJanjiBayarField);
-
-            // Initial toggle on page load
-            toggleJanjiBayarField();
-        }
-    });
     </script>
 @endpush
