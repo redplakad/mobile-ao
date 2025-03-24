@@ -12,8 +12,7 @@
 
         <!-- Title Centered -->
         <div class="absolute left-1/2 top-10 transform -translate-x-1/2 text-center">
-            <h1 class="font-semibold text-lg leading-[27px]">Daftar Nominatif</h1>
-            <p class="text-sm leading-[21px] text-[#909DBF]">{{ number_format($totalRow) }} Debitur</p>
+            <h1 class="font-semibold text-lg leading-[27px]">NOMINATIF</h1>
         </div>
     </div>
 
@@ -21,16 +20,25 @@
         <div class="px-2 sm:px-2 lg:px-4">
             <div class="sm:flex sm:items-center">
                 <div class="sm:flex-auto">
-                    <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
-                    <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name,
-                        title, email and role.</p>
-                </div>
-                <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <button type="button"
-                        class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add
-                        user</button>
+                    <h1 class="text-base font-semibold leading-6 text-gray-900">{{ $user->branch?->branch_name }}</h1>
+                    <p class="mt-2 text-sm text-gray-700"></p>
                 </div>
             </div>
+            <div>
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Pencarian Debitur</label>
+                <div class="mt-2 flex rounded-md shadow-sm">
+                  <div class="relative flex flex-grow items-stretch focus-within:z-10">
+                    <input type="email" name="email" id="email" class="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-xs sm:leading-6" placeholder="John Smith">
+                  </div>
+                  <button type="submit" class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                      </svg>
+                      
+                    cari
+                  </button>
+                </div>
+              </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
