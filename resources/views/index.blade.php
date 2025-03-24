@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ route('pages.404') }}" class="card-services">
+                <a href="{{ route('nominatif.index') }}" class="card-services">
                     <div
                         class="rounded-[20px] border border-[#E9E8ED] py-4 flex flex-col items-center text-center gap-2 bg-white transition-all duration-300 hover:ring-2 hover:ring-[#FF8E62]">
                         <div class="w-[50px] h-[50px] flex shrink-0">
@@ -103,20 +103,44 @@
                     <img src="assets/images/photos/avatar.png" alt="icon">
                 </div>
                 <div class="flex flex-col h-fit">
-                    <p class="font-semibold">Galih Setiabudi</p>
-                    <p class="text-sm leading-[21px] text-[#909DBF]">Kantor Cabang Kragilan</p>
+                    <p class="font-semibold">{{ $user->name }}</p>
+                    <p class="text-sm leading-[21px] text-[#909DBF]">{{ $user->branch?->branch_name }}</p>
                 </div>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded">
-                    Keluar
-                </button>
-            </form>
+            <div x-data="{ open: false }" class="relative z-10 inline-block text-left">
+                <div>
+                  <button @click="open = !open" type="button"
+                    class="flex items-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                    <span class="sr-only">Open options</span>
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM11.5 15.5a1.5 1.5 0 10-3 0 1.5 1.5 0 003 0z" />
+                    </svg>
+                  </button>
+                </div>
+              
+                <div x-show="open" @click.away="open = false"
+                  x-transition:enter="transition ease-out duration-100"
+                  x-transition:enter-start="transform opacity-0 scale-95"
+                  x-transition:enter-end="transform opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-75"
+                  x-transition:leave-start="transform opacity-100 scale-100"
+                  x-transition:leave-end="transform opacity-0 scale-95"
+                  class="absolute right-0 z-20 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                  <div class="py-1" role="none">      
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-0">Profile</a>
+                    <form method="POST" action="{{ route('logout') }}" role="none">
+                        @csrf
+                      <button type="submit" class="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">Keluar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
         </div>
     </section>
 
-    <section id="Profile" class="flex flex-col gap-3 px-4 mt-3 relative z-10">
+    <section id="Profile" class="flex flex-col gap-3 px-4 mt-3">
         <h1 class="font-semibold"></h1>
         <div class="rounded-2xl border border-[#E9E8ED] flex items-center justify-between p-4 bg-white">
             <table class="w-full mt-2 text-sm">
@@ -153,3 +177,6 @@
         </div>
     </section>
 @endsection
+@push('javascript')
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@endpush

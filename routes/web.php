@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\KreditController;
 use App\Http\Controllers\PenagihanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NominatifImportController;
@@ -32,6 +33,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');    
+
+    /* Kredit route section */
+    Route::get('/nominatif', [KreditController::class, 'index'])->name('nominatif.index');
+    // routes/web.php
+    Route::get('/nominatif/cabang/{branch_code}', [KreditController::class, 'showByBranch'])->name('nominatif.cabang');
 
     // route import nominatif
     Route::get('/nominatif/import', [NominatifImportController::class, 'form'])->name('nominatif.import.form');

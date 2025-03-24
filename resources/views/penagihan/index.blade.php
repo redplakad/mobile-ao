@@ -12,7 +12,7 @@
             <h1 class="font-semibold text-lg leading-[27px]">Daftar Penagihan</h1>
             <p class="text-sm leading-[21px] text-[#909DBF]">{{ count($penagihan) }} Debitur</p>
         </div>
-        <a href="./penagihan/create"class="w-10 h-10 flex shrink-0">
+        <a href="{{ route('penagihan.create') }}"class="w-10 h-10 flex shrink-0">
             <div class="w-10 h-10 flex shrink-0 ml-4">
                 <x-tabler-square-plus />
             </div>
