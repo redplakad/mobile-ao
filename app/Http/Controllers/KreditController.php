@@ -44,7 +44,14 @@ class KreditController extends Controller
         if ($request->filled('instansi')) {
             $query->where('TEMPAT_BEKERJA', $request->instansi);
         }
-    
+            // Filter Pencarian (Search) di beberapa field
+            if ($request->filled('q')) {
+                $search = $request->q;
+                $query->where(function ($query) use ($search) {
+                    $query->where('NAMA_NASABAH', 'like', "%$search%")
+                        ->orWhere('NOREK', 'like', "%$search%");
+                });
+            }
         $kredit = $query->paginate(10);
 
         // Kirim ke view

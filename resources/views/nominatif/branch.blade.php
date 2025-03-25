@@ -22,11 +22,11 @@
                 <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-50"
                     @click="open = false">
                 </div>
-                <form action="{{ route('nominatif.cabang', $user->branch?->branch_code) }}" method="GET">
+                <form action="{{ route('nominatif.cabang', $user->branch?->branch_code) . '?' . http_build_query(request()->except('search', 'page')) }}" method="GET">
                     <div class="mt-2 flex rounded-md shadow-sm">
                         <div class="relative flex flex-grow items-stretch focus-within:z-10">
                             <input type="text" name="q" id="q"
-                                class="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs sm:leading-6"
+                                class="block w-full rounded-none rounded-l-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs sm:leading-6"
                                 placeholder="Pencarian Debitur" value="{{ request('q') }}">
                         </div>
                         <button type="submit"
