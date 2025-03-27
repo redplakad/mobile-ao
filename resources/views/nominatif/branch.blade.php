@@ -195,7 +195,8 @@
                                         INSTANSI: '{{ $nominatif->TEMPAT_BEKERJA }}',
                                         ALAMAT: '{{ $nominatif->ALAMAT }}',
                                         AO: '{{ $nominatif->AO }}',
-                                        TGL_PK: '{{ $nominatif->TGL_PK }}'
+                                        TGL_PK: '{{ $nominatif->TGL_PK }}',
+                                        PETUGAS: '{{ $user->name }}'
                                     }; showDetail = true" 
                                     class="text-indigo-600 hover:text-indigo-900"
                                 >
@@ -283,7 +284,7 @@
                                 </div>
                             </div>
                             <div class="mt-4">
-                                <a :href="`https://wa.me/6281234567890?text=Halo%20*${selectedData.NAMA_NASABAH}*,%0A%0AKami%20dari%20Bagian%20Penagihan%20ingin%20menginformasikan%20bahwa%20Anda%20memiliki%20tunggakan%20pembayaran.%0A%0A📅%20*Tanggal%20Jatuh%20Tempo*:%20${formatTanggalJatuhTempo(selectedData.TGL_PK)}%0A💰%20*Tunggakan%20Pokok*:%20Rp${formatRupiah(selectedData.TUNGGAKAN_POKOK)}%0A💸%20*Tunggakan%20Bunga*:%20Rp${formatRupiah(selectedData.TUNGGAKAN_BUNGA)}%0A⏳%20*Durasi%20Keterlambatan*:%20${selectedData.JML_HARI_TUNGGAKAN}%20hari%0A%0AMohon%20untuk%20segera%20melakukan%20pembayaran%20agar%20terhindar%20dari%20denda%20dan%20sanksi%20lebih%20lanjut.%20Silakan%20hubungi%20kami%20jika%20ada%20pertanyaan.%0A%0ATerima%20kasih.`"
+                                <a :href="`https://wa.me/6285183309007?text=Halo%20*${selectedData.NAMA_NASABAH}*,%0A%0ASaya%20${selectedData.PETUGAS}%20dari%20Bagian%20Penagihan%20*PT%20BPR%20SERANG*%20ingin%20menginformasikan%20bahwa%20Anda%20memiliki%20tunggakan%20pembayaran.%0A%0A%F0%9F%93%85%20*Tanggal%20Jatuh%20Tempo*:%20${formatTanggalJatuhTempo(selectedData.TGL_PK)}%0A%F0%9F%92%B0%20*Tunggakan%20Pokok*:%20${formatRupiah(selectedData.TUNGGAKAN_POKOK)}%0A%F0%9F%92%B5%20*Tunggakan%20Bunga*:%20${formatRupiah(selectedData.TUNGGAKAN_BUNGA)}%0A%F0%9F%97%93%EF%B8%8F%20*Durasi%20Keterlambatan*:%20${selectedData.JML_HARI_TUNGGAKAN}%20hari%0A%0AMohon%20untuk%20segera%20melakukan%20pembayaran%20agar%20terhindar%20dari%20denda%20dan%20sanksi%20lebih%20lanjut.%20Silakan%20hubungi%20kami%20jika%20ada%20pertanyaan.%0A%0ATerima%20kasih.`"
                                     target="_blank" 
                                     class="inline-flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
@@ -311,37 +312,31 @@
 
             <!-- Pagination -->
             @if ($kredit->hasPages())
-                <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-                    <div class="flex flex-1 justify-between sm:hidden">
-                        <a href="{{ $kredit->appends(request()->query())->previousPageUrl() }}"
-                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 
-                              {{ $kredit->onFirstPage() ? 'opacity-50 cursor-not-allowed' : '' }}">
-                            Previous
-                        </a>
-                        <a href="{{ $kredit->appends(request()->query())->nextPageUrl() }}"
-                            class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 
-                              {{ $kredit->hasMorePages() ? '' : 'opacity-50 cursor-not-allowed' }}">
-                            Next
-                        </a>
-                    </div>
-                    <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                        <div>
-                            <p class="text-sm text-gray-700">
-                                Showing
-                                <span class="font-medium">{{ $kredit->firstItem() }}</span>
-                                to
-                                <span class="font-medium">{{ $kredit->lastItem() }}</span>
-                                of
-                                <span class="font-medium">{{ $kredit->total() }}</span>
-                                results
-                            </p>
-                        </div>
-                        <div>
-                            {{ $kredit->appends(request()->query())->links('vendor.pagination.tailwind') }}
-                        </div>
-                    </div>
+            <div class="flex flex-col items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:flex-row sm:px-6">
+                <div class="text-sm text-gray-700 mb-2 sm:mb-0">
+                    Menampilkan {{ $kredit->firstItem() }} - {{ $kredit->lastItem() }} dari {{ $kredit->total() }} data
                 </div>
-            @endif
+                <div class="flex items-center space-x-2">
+                    {{-- Tombol Previous --}}
+                    <a href="{{ $kredit->appends(request()->query())->previousPageUrl() }}"
+                        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 
+                            {{ $kredit->onFirstPage() ? 'opacity-50 cursor-not-allowed pointer-events-none' : '' }}">
+                        Previous
+                    </a>
+        
+                    {{-- Link Pagination --}}
+                    {{-- $kredit->appends(request()->query())->links('vendor.pagination.tailwind') --}}
+        
+                    {{-- Tombol Next --}}
+                    <a href="{{ $kredit->appends(request()->query())->nextPageUrl() }}"
+                        class="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 
+                            {{ $kredit->hasMorePages() ? '' : 'opacity-50 cursor-not-allowed pointer-events-none' }}">
+                        Next
+                    </a>
+                </div>
+            </div>
+        @endif
+        
 
         </div>
 
@@ -353,10 +348,17 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         function formatTanggalJatuhTempo(tglPK) {
-            let tgl = new Date(tglPK);
-            let now = new Date();
-            return `${tgl.getDate()} ${new Intl.DateTimeFormat('id-ID', { month: 'long' }).format(now)} ${now.getFullYear()}`;
+            if (!tglPK || tglPK.length !== 8) return "Tanggal tidak valid";
+
+            let hari = parseInt(tglPK.substring(6, 8), 10); // Ambil tanggal dari tglPK
+            let now = new Date(); // Ambil bulan dan tahun saat ini
+
+            let tgl = new Date(now.getFullYear(), now.getMonth(), hari); // Gunakan tanggal dari tglPK
+
+            let options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return new Intl.DateTimeFormat('id-ID', options).format(tgl);
         }
+
     
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka).replace(/,00$/, '');
