@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Kredit;
+use App\Models\UserActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,9 @@ class KreditController extends Controller
         $selectedCab = $request->query('cab', $user->branch?->branch_code);
         $selectedCabName = Branch::where('branch_code', $selectedCab)->first();
         $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
+        
+        $url = $request->path(); // Menyimpan URL tanpa query string
+        $totalHit = UserActivity::where('url', 'like', "{$url}%")->count();
 
         // Ambil latest datadate dari cache atau database
         $latestDate = Cache::remember('kredit_latest_datadate', now()->addMinutes(60), function () {
@@ -44,7 +48,7 @@ class KreditController extends Controller
                 ->where('datadate', $selectedDatadate)
                 ->exists();
         });
-        return view('nominatif.index', compact('selectedCab','selectedCabName', 'selectedDatadate', 'user', 'cabs', 'datadates', 'dataExists', 'latestDate'));
+        return view('nominatif.index', compact('selectedCab','selectedCabName', 'selectedDatadate', 'user', 'cabs', 'datadates', 'dataExists', 'latestDate', 'totalHit'));
     }
     // app/Http/Controllers/NominatifController.php
 
