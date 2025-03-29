@@ -22,9 +22,10 @@
         <!-- Tombol Pilih Tanggal -->
         <button @click="open = true"
             class="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-700 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10m-8 4h6m-7 8h8a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
             </svg>
+              
             Pilih Tanggal
         </button>
     
@@ -95,12 +96,12 @@
 
             <div class="flex-1">
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('nominatif.cabang', ['branch_code' => $user->branch?->branch_code, 'datadate' => $selectedDatadate]) }}">
+                    <a href="{{ route('nominatif.cabang', ['branch_code' => $selectedCab, 'datadate' => $selectedDatadate]) }}">
                         <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
                     </a>
                 </div>
                 <h3 class="text-sm font-bold mt-1">
-                    <span class="font-normal text-gray-500">Daftar Nominatif kredit cabang Kragilan</span>
+                    <span class="font-normal text-gray-500">Daftar Nominatif kredit {{ $selectedCabName }}</span>
                 </h3>
             </div>
         </div>
@@ -112,9 +113,9 @@
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z">
                     </path>
                 </svg>
-                <span>{{ \Carbon\Carbon::parse($selectedDatadate)->format('d M Y') }}</span>
+                <span class="text-xs">{{ \Carbon\Carbon::parse($selectedDatadate)->format('d M Y') }}</span>
             </div>
-
+        
             @php
                 $participants = 20;
                 $avatars = [
@@ -123,16 +124,20 @@
                     'https://i.pravatar.cc/40?img=3',
                 ];
             @endphp
-
+        
             <div class="flex items-center gap-2">
-                <span>dilihat oleh 235 Org</span>
                 <div class="flex -space-x-2">
                     @foreach($avatars as $avatar)
                         <img src="{{ $avatar }}" alt="avatar" class="w-6 h-6 rounded-full border-2 border-white object-cover">
                     @endforeach
                 </div>
+                <div class="flex items-center gap-1 text-gray-500">
+                    <x-tabler-eye class="w-5 h-5 text-gray-500 text-xs" />
+                    <span class="text-xs">235 kali</span>
+                </div>
             </div>
         </div>
+        
     </div>
 @endif
 

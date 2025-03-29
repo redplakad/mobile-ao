@@ -3,21 +3,10 @@
 @section('title', 'SMAR AO | PT BPR SERANG - Sistem Monitoring & Analisa Realtime & Terintegrasi AO')
 
 @section('content')
-    <div class="bg-[#01017a] absolute top-0 max-w-[640px] w-full mx-auto rounded-b-[50px] h-[370px]"></div>
-    <form action="" class="flex flex-col gap-6 mt-6 relative z-10">
-        <div class="flex flex-col gap-2 px-4">
-            <label for="Location" class="font-semibold text-white">Pencarian</label>
-            <div
-                class="rounded-full flex items-center p-[12px_16px] bg-white w-full transition-all duration-300 focus-within:ring-2 focus-within:ring-[#FF8E62]">
-                <div class="w-6 h-6 flex shrink-0 mr-[6px]">
-                    <x-tabler-search />
-                </div>
-                <input type="text" name="keyword" placeholder="Pencarian Nama debitur"
-                    class="w-full border-none outline-none focus:outline-none focus:ring-0 focus:border-transparent">
-            </div>
-        </div>
+    <div class="bg-[#01017a] absolute top-0 max-w-[640px] w-full mx-auto h-[370px]"></div>
+    <form action="" class="flex flex-col gap-6 mt-12 relative z-10">
         <section id="Services" class="flex flex-col gap-3 px-4">
-            <h1 class="font-semibold text-white">Selamat Datang Galih.</h1>
+            <h1 class="font-semibold text-white">Selamat Datang {{ $user->name }}</h1>
             <div class="grid grid-cols-3 gap-4">
                 <a href="{{ route('penagihan.index') }}" class="card-services">
                     <div

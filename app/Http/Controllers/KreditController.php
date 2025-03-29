@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
 use App\Models\Kredit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,6 +15,8 @@ class KreditController extends Controller
     {
         $user = Auth::user();
         $selectedCab = $request->query('cab', $user->branch?->branch_code);
+        $selectedCabName = Branch::where('branch_code', $selectedCab)->first();
+        $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
 
         // Ambil latest datadate dari cache atau database
         $latestDate = Cache::remember('kredit_latest_datadate', now()->addMinutes(60), function () {
@@ -41,15 +44,18 @@ class KreditController extends Controller
                 ->where('datadate', $selectedDatadate)
                 ->exists();
         });
-        return view('nominatif.index', compact('selectedCab', 'selectedDatadate', 'user', 'cabs', 'datadates', 'dataExists', 'latestDate'));
+        return view('nominatif.index', compact('selectedCab','selectedCabName', 'selectedDatadate', 'user', 'cabs', 'datadates', 'dataExists', 'latestDate'));
     }
     // app/Http/Controllers/NominatifController.php
 
     public function showByBranch($branch_code, Request $request)
     {
         $user = Auth::user();
-        $datadate = request('datadate', '2025-03-24'); 
-        $branchCode = $user->branch?->branch_code;
+        $datadate = request('datadate', '2025-03-24');
+        $selectedCab = $branch_code;
+        $selectedCabName = Branch::where('branch_code', $selectedCab)->first();
+        $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
+        $branchCode = $branch_code;
         
         // Cache daftar unik AO, Produk, dan Instansi
         $listAO = Cache::remember("list_ao_{$branchCode}_{$datadate}", now()->addMinutes(60), function () use ($datadate, $branchCode) {
@@ -65,7 +71,8 @@ class KreditController extends Controller
         });
         
         // Query utama selalu menyertakan `datadate`
-        $query = Kredit::where('datadate', $datadate);
+        $query = Kredit::where('datadate', $datadate)
+                        ->where('CAB', $selectedCab);
         
         // Filter berdasarkan input dari request
         if ($request->filled('kolektibilitas')) {
@@ -100,7 +107,7 @@ class KreditController extends Controller
         });
 
         // Kirim ke view
-        return view('nominatif.branch', compact('user','kredit', 'listAO', 'listProduk', 'listInstansi'));
+        return view('nominatif.branch', compact('user','kredit', 'listAO', 'listProduk', 'listInstansi', 'selectedCab', 'selectedCabName'));
     }
 
 }

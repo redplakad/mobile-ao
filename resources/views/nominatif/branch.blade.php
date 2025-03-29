@@ -10,20 +10,23 @@
         </a>
         <div class="flex flex-col w-fit text-center">
             <h1 class="font-semibold text-lg leading-[27px]">NOMINATIF</h1>
-            <p class="text-sm leading-[21px] text-[#909DBF]">{{ $user->branch?->branch_name }}</p>
+            <p class="text-sm leading-[21px] text-[#909DBF]">{{ $selectedCabName }}</p>
         </div>
         <a href="{{ route('front.index') }}" class="w-10 h-10 flex shrink-0 ml-4">
             <x-tabler-home />
         </a>
     </div>
-    <div class="flex flex-col gap-6 mt-[30px]">
+    <div class="flex flex-col gap-6 mt-[30px] bg-white">
         <div class="px-2 sm:px-2 lg:px-4">
             <div x-data="{ open: false }">
                 <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-50"
                     @click="open = false">
                 </div>
-                <form action="{{ route('nominatif.cabang', $user->branch?->branch_code) . '?' . http_build_query(request()->except('search', 'page')) }}" method="GET">
+                <form action="{{ route('nominatif.cabang', ['branch_code' => $selectedCab]) . '?' . http_build_query(request()->except('search', 'page')) }}" method="GET">
                     <div class="mt-2 flex rounded-md shadow-sm">
+                        <input type="hidden" name="datadate" value="{{ request('datadate') }}">
+                        <input type="hidden" name="ao" value="{{ request('ao') }}">
+                        <input type="hidden" name="instansi" value="{{ request('instansi') }}">
                         <div class="relative flex flex-grow items-stretch focus-within:z-10">
                             <input type="text" name="q" id="q"
                                 class="block w-full rounded-none rounded-l-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs sm:leading-6"
@@ -36,7 +39,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
-                            Cari
                         </button>
                         <button type="button" x-on:click="open = true"
                             class="relative ml-2 inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition">
@@ -44,8 +46,17 @@
                                 stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h18M5 12h14m-7 7h7" />
                             </svg>
-                            Filter
                         </button>
+                        @if(request()->has('ao') || request()->has('q') || request()->has('instansi') || request()->has('kolektibilitas'))
+                            <a href="{{ route('nominatif.cabang', ['branch_code' => $selectedCab, 'datadate' => request('datadate')]) }}"
+                                class="relative ml-2 inline-flex items-center gap-x-1.5 rounded-md px-3 py-2 text-xs font-semibold text-white bg-red-800 hover:bg-red-700 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>                              
+                            </a>
+                        @endif
+                        
+                         
                     </div>
                 </form>
 
@@ -63,8 +74,11 @@
                         x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-90 opacity-0">
 
                         <h2 class="text-lg font-semibold text-gray-900">Filter Data Kredit</h2>
-                        <form method="GET" action="{{ route('nominatif.cabang', $user->branch?->branch_code) }}">
+                        <form method="GET" action="{{ route('nominatif.cabang', ['branch_code' => $selectedCab]) }}">
                             <input type="hidden" name="q" value="{{ request('q') }}">
+                            <input type="hidden" name="datadate" value="{{ request('datadate') }}">
+                            <input type="hidden" name="ao" value="{{ request('ao') }}">
+                            <input type="hidden" name="instansi" value="{{ request('instansi') }}">
 
                             <div class="mt-4">
                                 <label class="block text-sm font-medium text-gray-700">Kolektibilitas</label>
@@ -244,8 +258,8 @@
                                 </div>
                         
                                 <div class="flex flex-col">
-                                    <span class="text-gray-500">Hari Tunggakan</span>
-                                    <span class="font-medium text-red-500" x-text="selectedData?.JML_HARI_TUNGGAKAN"></span>
+                                    <span class="text-gray-500">Durasi</span>
+                                    <span class="font-medium text-gray-900" x-text="selectedData?.JML_HARI_TUNGGAKAN + ' Hari'"></span>
                                 </div>
                         
                                 <div class="flex flex-col">

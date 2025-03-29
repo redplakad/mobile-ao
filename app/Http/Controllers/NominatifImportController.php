@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ImportKreditJob;
 use App\Models\Kredit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
 
 class NominatifImportController extends Controller
 {
@@ -19,10 +22,10 @@ class NominatifImportController extends Controller
             'csv_file' => 'required|mimes:csv,txt',
             'datadate' => 'required|date',
         ]);
-
+    
         $file = $request->file('csv_file');
         $datadate = $request->datadate;
-
+    
         $headerMap = [
             'CAB' => 'CAB',
             'NOREK' => 'NOREK',
@@ -38,7 +41,7 @@ class NominatifImportController extends Controller
             'TGL_AWAL_FAS' => 'TGL_AWAL_FAS',
             'TGL_AKHIR_FAS' => 'TGL_AKHIR_FAS',
             'PLAFOND_AWAL' => 'PLAFOND_AWAL',
-            '%BGA' => 'PERSEN_BGA', // Mapping khusus
+            '%BGA' => 'PERSEN_BGA',
             'TUNGGAKAN_POKOK' => 'TUNGGAKAN_POKOK',
             'TUNGGAKAN_BUNGA' => 'TUNGGAKAN_BUNGA',
             'ANGSURAN_TOTAL' => 'ANGSURAN_TOTAL',
@@ -61,25 +64,34 @@ class NominatifImportController extends Controller
             'TGL_VALID_KOLEK' => 'TGL_VALID_KOLEK',
             'TGL_MACET' => 'TGL_MACET',
         ];
+        
+        $userId = Auth::id();
 
-        $data = array_map('str_getcsv', file($file));
-        $headers = array_map('trim', $data[0]);
-
-        unset($data[0]); // remove header row
-
-        foreach ($data as $row) {
-            $rowData = [];
-            foreach ($headers as $index => $headerName) {
-                $dbColumn = $headerMap[$headerName] ?? null;
-                if ($dbColumn) {
-                    $rowData[$dbColumn] = $row[$index] ?? null;
+        // Buka file CSV dan parse baris dengan delimiter '|'
+        $rows = [];
+        if (($handle = fopen($file, 'r')) !== false) {
+            // Baca header
+            $headers = fgetcsv($handle, 0, '|');
+            $headers = array_map('trim', $headers); // Buang spasi tambahan dari header
+    
+            while (($row = fgetcsv($handle, 0, '|')) !== false) {
+                $rowAssoc = array_combine($headers, $row);
+                $rows[] = $rowAssoc;
+    
+                // Potong setiap 1000 baris agar tidak overload
+                if (count($rows) === 1000) {
+                    ImportKreditJob::dispatch($rows, $datadate, $headerMap, $userId);
+                    $rows = [];
                 }
             }
-            $rowData['datadate'] = $datadate;
-
-            Kredit::create($rowData);
+            fclose($handle);
         }
-
-        return redirect()->back()->with('success', 'Data berhasil diimport.');
+    
+        // Jika ada sisa baris yang belum di-dispatch
+        if (!empty($rows)) {
+            ImportKreditJob::dispatch($rows, $datadate, $headerMap, $userId);
+        }
+    
+        return redirect()->back()->with('success', 'Proses import telah dimulai, akan selesai dalam beberapa saat.');
     }
 }

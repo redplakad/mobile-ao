@@ -18,11 +18,11 @@
              </a>
          </li>
          <li>
-             <a href="{{ route('pages.404') }}" class="flex flex-col items-center text-center gap-1">
+             <a href="{{ route('notifications.index') }}" class="flex flex-col items-center text-center gap-1">
                  <div class="w-6 h-6 flex shrink-0 ">
                      <x-tabler-brand-mailgun class="text-[#BABEC7]" />
                  </div>
-                 <p class="font-semibold text-xs leading-[18px] text-[#BABEC7]">Aktivitas</p>
+                 <p class="font-semibold text-xs leading-[18px] text-[#BABEC7]">Notifikasi</p>
              </a>
          </li>
          <li>
