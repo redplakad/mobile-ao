@@ -61,18 +61,22 @@ class KreditController extends Controller
         $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
         $branchCode = $branch_code;
         
-        // Cache daftar unik AO, Produk, dan Instansi
-        $listAO = Cache::remember("list_ao_{$branchCode}_{$datadate}", now()->addMinutes(60), function () use ($datadate, $branchCode) {
-            return Kredit::where('datadate', $datadate)->where('CAB', $branchCode)->distinct()->pluck('AO');
-        });
-        
-        $listProduk = Cache::remember("list_produk_{$branchCode}_{$datadate}", now()->addMinutes(60), function () use ($datadate, $branchCode) {
-            return Kredit::where('datadate', $datadate)->where('CAB', $branchCode)->distinct()->pluck('KET_KD_PRD');
-        });
-        
-        $listInstansi = Cache::remember("list_instansi_{$branchCode}_{$datadate}", now()->addMinutes(60), function () use ($datadate, $branchCode) {
-            return Kredit::where('datadate', $datadate)->where('CAB', $branchCode)->distinct()->pluck('TEMPAT_BEKERJA');
-        });
+        // Ambil daftar unik AO, Produk, dan Instansi tanpa cache
+        $listAO = Kredit::where('datadate', $datadate)
+                        ->where('CAB', $branchCode)
+                        ->distinct()
+                        ->pluck('AO');
+
+        $listProduk = Kredit::where('datadate', $datadate)
+                            ->where('CAB', $branchCode)
+                            ->distinct()
+                            ->pluck('KET_KD_PRD');
+
+        $listInstansi = Kredit::where('datadate', $datadate)
+                            ->where('CAB', $branchCode)
+                            ->distinct()
+                            ->pluck('TEMPAT_BEKERJA');
+
         
         // Query utama selalu menyertakan `datadate`
         $query = Kredit::where('datadate', $datadate)

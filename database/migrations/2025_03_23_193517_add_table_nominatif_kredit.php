@@ -38,7 +38,7 @@ return new class extends Migration
             $table->integer('JANGKA_WAKTU')->nullable();
             $table->string('REK_PENCAIRAN', 12)->nullable();
             $table->string('TGL_LAHIR', 8)->nullable();
-            $table->string('NIK', 17)->nullable();
+            $table->string('NIK', 50)->nullable();
             $table->string('AO', 50)->nullable();
             $table->string('KELURAHAN', 50)->nullable();
             $table->string('KECAMATAN', 50)->nullable();

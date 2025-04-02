@@ -27,6 +27,7 @@
                         <input type="hidden" name="datadate" value="{{ request('datadate') }}">
                         <input type="hidden" name="ao" value="{{ request('ao') }}">
                         <input type="hidden" name="instansi" value="{{ request('instansi') }}">
+                        <input type="hidden" name="produk" value="{{ request('produk') }}">
                         <div class="relative flex flex-grow items-stretch focus-within:z-10">
                             <input type="text" name="q" id="q"
                                 class="block w-full rounded-none rounded-l-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs sm:leading-6"
@@ -54,10 +55,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                 </svg>                              
                             </a>
-                        @endif
-                        
-                         
+                        @endif                         
                     </div>
+
+                    <div id="active-filters" class="flex flex-wrap gap-2">
                 </form>
 
                 <!-- Modal Filter -->
@@ -136,6 +137,12 @@
                                     class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-md">Batal</button>
                                 <button type="submit"
                                     class="ml-3 px-4 py-2 text-sm text-white bg-indigo-600 hover:bg-indigo-500 rounded-md">Terapkan</button>
+                                @if(request()->has('ao') || request()->has('q') || request()->has('instansi') || request()->has('kolektibilitas'))
+                                    <a href="{{ route('nominatif.cabang', ['branch_code' => $selectedCab, 'datadate' => request('datadate')]) }}"
+                                        class="ml-3 px-4 py-2 text-sm text-white bg-red-800 hover:bg-red-700 rounded-md transition">
+                                        Reset                            
+                                    </a>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -143,7 +150,7 @@
             </div>
 
             <div x-data="{ showDetail: false, selectedData: null }" class="overflow-x-auto">
-                <table class="w-full divide-y divide-gray-200">
+                <table class="w-full divide-y divide-gray-200 mt-5">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-2 py-2 text-left text-xs font-semibold text-gray-900">Nama</th>
@@ -289,7 +296,7 @@
                                     <span class="font-medium text-gray-900" x-text="selectedData?.ALAMAT"></span>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="text-gray-500">TEMPAT BEKERJA</span>
+                                    <span class="text-gray-500">Tempat Bekerja</span>
                                     <span class="font-medium text-gray-900" x-text="selectedData?.INSTANSI"></span>
                                 </div>
                                 <div class="flex flex-col">
@@ -377,5 +384,13 @@
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(angka).replace(/,00$/, '');
         }
-    </script>    
+    </script> 
+    
+    <script>
+        function removeFilter(filter) {
+            const url = new URL(window.location.href);
+            url.searchParams.delete(filter);
+            window.location.href = url.toString();
+        }
+    </script>
 @endpush
