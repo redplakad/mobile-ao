@@ -43,6 +43,7 @@ Route::middleware(['auth', LogUserActivity::class])->group(function () {
     Route::prefix('nominatif')->group(function () {
         Route::get('/', [KreditController::class, 'index'])->name('nominatif.index');
         Route::get('/cabang/{branch_code}', [KreditController::class, 'showByBranch'])->name('nominatif.cabang');
+        Route::get('/rekap/kolektibilitas/{branch_code}', [KreditController::class, 'recapByKol'])->name('nominatif.rekap.kol');
         Route::get('/import', [NominatifImportController::class, 'form'])->name('nominatif.import.form');
         Route::post('/import', [NominatifImportController::class, 'import'])->name('nominatif.import.process');
     });

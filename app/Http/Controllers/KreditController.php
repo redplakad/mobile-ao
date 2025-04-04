@@ -118,4 +118,26 @@ class KreditController extends Controller
         return view('nominatif.branch', compact('user','kredit', 'listAO', 'listProduk', 'listInstansi', 'selectedCab', 'selectedCabName'));
     }
 
+    public function recapByKol($branch_code, Request $request)
+    {
+        $datadate = $request->input('datadate', '2025-03-24');
+        $cacheKey = "recap_by_kol_{$branch_code}_{$datadate}";
+    
+        $recapData = Cache::remember($cacheKey, now()->addMinutes(60), function () use ($datadate, $branch_code) {
+            return Kredit::select('KODE_KOLEK')
+                ->selectRaw('COUNT(*) as total_count, SUM(POKOK_PINJAMAN) as total_sum')
+                ->where('datadate', $datadate)
+                ->where('CAB', $branch_code)
+                ->groupBy('KODE_KOLEK')
+                ->get();
+        });
+
+        
+        $sumDeb = $recapData->sum('total_count');
+        $sumBaki = $recapData->sum('total_sum');
+        $sumNPL = $recapData->where('KODE_KOLEK', '>', 2)->sum('total_sum');
+    
+        return view('nominatif.rekap.kolektibilitas', compact('recapData', 'sumDeb', 'sumNPL', 'sumBaki'));
+    }
+
 }

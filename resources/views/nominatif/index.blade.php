@@ -89,6 +89,7 @@
                     {{ \Carbon\Carbon::parse($latestDate)->format('Y-m-d') }}.</p>
             </div>
         @else
+            
             <div class="bg-white rounded-xl p-4 shadow-sm flex flex-col space-y-2">
                 <div class="flex items-center space-x-3">
                     <!-- Icon Box -->
@@ -99,14 +100,12 @@
                     </div>
 
                     <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                            <a href="{{ route('nominatif.cabang', [
-                                    'branch_code' => $selectedCab, 
-                                    'datadate' => request('datadate', $datadates)
-                                ]) }}">
-                                <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
-                            </a>
-                        </div>
+                    <a href="{{ route('nominatif.cabang', [
+                            'branch_code' => $selectedCab, 
+                            'datadate' => implode(',', (array) request()->query('datadate', $datadates))
+                        ]) }}">
+                        <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
+                    </a>
                         <h3 class="text-sm font-bold mt-1">
                             <span class="font-normal text-gray-500">Daftar Nominatif kredit {{ $selectedCabName }}</span>
                         </h3>
@@ -144,6 +143,61 @@
                 </div>
 
             </div>
+
+            <div class="bg-white rounded-xl p-4 shadow-sm flex flex-col space-y-2">
+                <div class="flex items-center space-x-3">
+                    <!-- Icon Box -->
+                    <div class="w-12 h-12 flex items-center justify-center rounded-xl bg-violet-100 text-violet-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"></path>
+                        </svg>
+                    </div>
+
+                    <div class="flex-1">
+                    <a href="{{ route('nominatif.rekap.kol', [
+                            'branch_code' => $selectedCab, 
+                            'datadate' => implode(',', (array) request()->query('datadate', $datadates))
+                        ]) }}">
+                        <h3 class="text-sm font-bold mt-1">Rekap Per Kolektibilitas</h3>
+                    </a>
+                        <h3 class="text-sm font-bold mt-1">
+                            <span class="font-normal text-gray-500">Rekap kredit per kolektibilitas {{ $selectedCabName }}</span>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center text-sm text-gray-600 mt-1">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z">
+                            </path>
+                        </svg>
+                        <span class="text-xs">{{ \Carbon\Carbon::parse($selectedDatadate)->format('d M Y') }}</span>
+                    </div>
+
+                    @php
+                        $participants = 20;
+                        $avatars = ['https://i.pravatar.cc/40?img=1', 'https://i.pravatar.cc/40?img=2', 'https://i.pravatar.cc/40?img=3'];
+                    @endphp
+
+                    <div class="flex items-center gap-2">
+                        <div class="flex -space-x-2">
+                            @foreach ($avatars as $avatar)
+                                <img src="{{ $avatar }}" alt="avatar"
+                                    class="w-6 h-6 rounded-full border-2 border-white object-cover">
+                            @endforeach
+                        </div>
+                        <div class="flex items-center gap-1 text-gray-500">
+                            <x-tabler-eye class="w-5 h-5 text-gray-500 text-xs" />
+                            <span class="text-xs">{{ $totalHit }} kali</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         @endif
 
     </div>

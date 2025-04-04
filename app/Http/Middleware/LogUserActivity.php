@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use App\Models\UserActivity;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\NominatifBranchController;
 
 class LogUserActivity
 {
