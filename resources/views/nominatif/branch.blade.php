@@ -3,7 +3,13 @@
 @section('title', 'Daftar Penagihan')
 @section('content')
     <div id="Top-nav" class="flex items-center justify-between px-4 pt-10">
-    <a href="{{ request('recap') == 'true' ? route('nominatif.rekap.kol', ['branch_code' => $selectedCab, 'datadate' => $datadate]) : route('nominatif.index') }}">
+    @php
+        $url = !empty(request('recap'))
+            ? route(request('recap'), ['branch_code' => $selectedCab, 'datadate' => $datadate, 'produk' => request('produk'), 'kolektibilitas' => request('kolektibilitas')])
+            : route('nominatif.index');
+    @endphp
+
+    <a href="{{ $url }}">
         <div class="w-10 h-10 flex shrink-0">
             <x-tabler-arrow-narrow-left />
         </div>

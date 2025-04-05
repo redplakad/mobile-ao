@@ -45,6 +45,7 @@ Route::middleware(['auth', LogUserActivity::class])->group(function () {
         Route::get('/cabang/{branch_code}', [KreditController::class, 'showByBranch'])->name('nominatif.cabang');
         Route::get('/rekap/kolektibilitas/{branch_code}', [KreditController::class, 'recapByKol'])->name('nominatif.rekap.kol');
         Route::get('/rekap/produk/{branch_code}', [KreditController::class, 'recapByProduk'])->name('nominatif.rekap.produk');
+        Route::get('/rekap/produk/detail/{branch_code}', [KreditController::class, 'recapByProdukDetail'])->name('nominatif.rekap.produk.detail');
         Route::get('/import', [NominatifImportController::class, 'form'])->name('nominatif.import.form');
         Route::post('/import', [NominatifImportController::class, 'import'])->name('nominatif.import.process');
     });

@@ -69,7 +69,7 @@
                                 'branch_code' => $branch_code, 
                                 'datadate' => implode(',', (array) request()->query('datadate', $datadate)),
                                 'kolektibilitas' => $data->KODE_KOLEK,
-                                'recap' => 'true'
+                                'recap' => 'nominatif.rekap.kol'
                             ]) }}">    
                             {{ $kolekLabels[$data->KODE_KOLEK] ?? 'Unknown' }}</a></td>
                             <td class="px-2 py-3 text-gray-700 text-xs">{{ number_format($data->total_count, 0, ',', '.') }}

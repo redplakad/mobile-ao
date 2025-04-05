@@ -129,7 +129,7 @@ class KreditController extends Controller
         }
 
         if ($request->filled("produk")) {
-            $query->where("KET_KD_PRD", $request->produk);
+            $query->where("KET_KD_PRD", urldecode($request->produk));
         }
 
         if ($request->filled("instansi")) {
@@ -263,5 +263,32 @@ class KreditController extends Controller
             'datadate'
         ));
     }
-    
+
+    public function recapByProdukDetail($branch_code, Request $request)
+    {
+        $datadate = $request->input('datadate', now()->toDateString());
+
+        $recapData = Kredit::select('KET_KD_PRD', 'KODE_KOLEK')
+            ->selectRaw('COUNT(*) as total_count, 
+                        SUM(POKOK_PINJAMAN) as total_sum,
+                        SUM(CASE WHEN KODE_KOLEK > 2 THEN POKOK_PINJAMAN ELSE 0 END) as npl_sum')
+            ->where('datadate', $datadate)
+            ->where('CAB', $branch_code)
+            ->groupBy('KET_KD_PRD', 'KODE_KOLEK')
+            ->get()
+            ->groupBy('KET_KD_PRD');
+
+        $sumDeb = $recapData->flatten()->sum('total_count');
+        $sumBaki = $recapData->flatten()->sum('total_sum');
+        $sumNPL = $recapData->flatten()->sum('npl_sum');
+
+        return view('nominatif.rekap.produkDetail', compact(
+            'recapData',
+            'sumDeb',
+            'sumBaki',
+            'sumNPL',
+            'branch_code',
+            'datadate'
+        ));
+    }
 }
