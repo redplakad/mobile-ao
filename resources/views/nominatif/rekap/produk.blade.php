@@ -10,7 +10,7 @@
 
         <!-- Title Centered -->
         <div class="absolute left-1/2 top-10 transform -translate-x-1/2 text-center">
-            <h1 class="font-semibold text-lg leading-[27px]">Rekap Kolektibilitas</h1>
+            <h1 class="font-semibold text-lg leading-[27px]">Rekap Produk</h1>
             <p class="text-sm leading-[21px] text-[#909DBF]"></p>
         </div>
     </div>

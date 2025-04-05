@@ -15,7 +15,7 @@
         $totalNPL = $items->sum('npl_sum');
 
         $url = !empty(request('recap'))
-            ? route(request('recap'), ['branch_code' => $branch_code, 'datadate' => $datadate])
+            ? route(request('recap'), ['branch_code' => $branch_code, 'datadate' => $datadate, 'produk' => request('produk'), 'kolektibilitas' => request('kolektibilitas')])
             : route('nominatif.index');
     @endphp
 
