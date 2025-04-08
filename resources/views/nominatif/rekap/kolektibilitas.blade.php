@@ -89,7 +89,10 @@
                     </tr>
                 </tbody>
             </table>
-
+            <a href="{{ route('rekap.kol.download', ['branch_code' => $branch_code, 'datadate' => $datadate]) }}"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm transition">
+                Download Rekap KOL
+            </a>
         </div>
     </div>
 
