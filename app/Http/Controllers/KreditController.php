@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\Exports\RecapByKolExport;
+use App\Http\Controllers\Exports\RecapByProdukExport;
+
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class KreditController extends Controller
@@ -512,7 +516,34 @@ class KreditController extends Controller
         ));
     }
 
-
-
+    /* Download ke excel */
     
+    public function downloadRecapKol($branch_code, Request $request)
+    {
+        $branchName = match ($branch_code) {
+            '000' => 'KANTOR PUSAN NON OPERASIONAL',
+            '001' => 'KANTOR PUSAT OPERASIONAL',
+            '002' => 'KANTOR CABANG KASEMEN',
+            '003' => 'KANTOR CABANG ANYAR',
+            '004' => 'KANTOR CABANG CINANGKA',
+            '005' => 'KANTOR CABANG PONTANG',
+            '006' => 'KANTOR CABANG CARENANG',
+            '007' => 'KANTOR CABANG KRAGILAN',
+            default => 'UNKNOWN',
+        };
+
+        $datadate = $request->input('datadate', now()->toDateString());
+        $fileName = "rekap_kol_{$branch_code}_{$datadate}.xlsx";
+
+        return Excel::download(new RecapByKolExport($branch_code, $datadate, $branchName), $fileName);
+
+    }
+
+    public function downloadRecapProduk($branch_code, Request $request)
+    {
+        $datadate = $request->input('datadate', now()->toDateString());
+        $fileName = "rekap_produk_{$branch_code}_{$datadate}.xlsx";
+
+        return Excel::download(new RecapByProdukExport($branch_code, $datadate), $fileName);
+    }
 }

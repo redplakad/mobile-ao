@@ -58,6 +58,10 @@ Route::middleware(['auth', LogUserActivity::class])->group(function () {
         Route::get('/rekap/instansi/detail/{branch_code}', [KreditController::class, 'recapByInstansiDetail'])->name('nominatif.rekap.instansi.detail');
         Route::get('/import', [NominatifImportController::class, 'form'])->name('nominatif.import.form');
         Route::post('/import', [NominatifImportController::class, 'import'])->name('nominatif.import.process');
+
+        Route::get('/rekap/kolektibilitas/{branch_code}/download', [KreditController::class, 'downloadRecapKol'])->name('rekap.kol.download');
+        Route::get('/rekap/produk/{branch_code}/download', [KreditController::class, 'downloadRecapProduk'])->name('rekap.produk.download');
+
     });
 
     /* Notification routes */
