@@ -38,6 +38,6 @@ class RecapByProdukExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['Produk', 'Total Debitur', 'Total Baki Debet', 'Total NPL'];
+        return ['Produk', 'Total Debitur', 'Total Baki Debet'];
     }
 }
