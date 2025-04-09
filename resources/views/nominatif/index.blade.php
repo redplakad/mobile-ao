@@ -100,11 +100,12 @@
                     </div>
 
                     <div class="flex-1">
-                        <a href="{{ route('nominatif.cabang', [ 
-                            'branch_code' => $selectedCab,
-                            'datadate' => $selectedDatadate,
-                        ]) }}">
-                                <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
+                        <a
+                            href="{{ route('nominatif.cabang', [
+                                'branch_code' => $selectedCab,
+                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                            ]) }}">
+                            <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
                         </a>
                         <h3 class="text-sm font-bold mt-1">
                             <span class="font-normal text-gray-500">Daftar Nominatif kredit {{ $selectedCabName }}</span>
@@ -153,7 +154,7 @@
                         <a
                             href="{{ route('nominatif.rekap.kol', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $selectedDatadate)),
+                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Kolektibilitas</h3>
                         </a>
