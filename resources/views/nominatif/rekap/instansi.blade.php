@@ -27,9 +27,17 @@
             </div>
             <div class="bg-red-500 p-6 rounded-lg shadow-md text-center text-white">
                 <h3 class="text-xs font-semibold">NPL</h3>
-                <p class="text-sm font-extrabold">{{ number_format(($sumNPL / $sumBaki) * 100, 2, ',', '.') }}%</p>
+                <p class="text-sm font-extrabold">
+                    @if($sumBaki > 0)
+                        {{ number_format(($sumNPL / $sumBaki) * 100, 2, ',', '.') }}%
+                    @else
+                        0,00%
+                    @endif
+                </p>
             </div>
         </div>
+    </div>
+
 
         <div class="bg-white rounded-lg overflow-hidden px-4 py-4 text-xs">
             <table id="instansi-table" class="min-w-full text-left text-gray-700 bg-white">
