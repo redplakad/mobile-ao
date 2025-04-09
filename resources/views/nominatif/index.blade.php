@@ -101,12 +101,12 @@
 
                     <div class="flex-1">
                     @php
-                        $queryDatadate = request()->query('datadate') ?? $datadates;
+                        $queryDatadate = (isset(request()->query('datadate')) request()->query('datadate') ?? $datadates);
                     @endphp
 
                     <a href="{{ route('nominatif.cabang', [ 
                         'branch_code' => $selectedCab,
-                        'datadate' => (array) $queryDatadate, // pastikan array
+                        'datadate' => $queryDatadate, // pastikan array
                     ]) }}">
                             <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
                         </a>
