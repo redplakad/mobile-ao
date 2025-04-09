@@ -34,7 +34,7 @@
     <div class="flex flex-col gap-6 mt-[30px] bg-white">
         <div class="px-2 sm:px-2 lg:px-4">
             <div x-data="{ open: false }">
-                <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-50"
+                <div x-show="open" x-cloak x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50 z-50"
                     @click="open = false">
                 </div>
                 <form action="{{ route('nominatif.cabang', ['branch_code' => $selectedCab]) . '?' . http_build_query(request()->except('search', 'page')) }}" method="GET">

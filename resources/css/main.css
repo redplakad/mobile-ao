@@ -47,3 +47,4 @@ h-8{
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 1); /* fallback ring-blue-500 */
     border-radius: 0.5rem;
 }
+[x-cloak] { display: none !important; }

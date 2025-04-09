@@ -32,7 +32,7 @@
             </button>
 
             <!-- Modal -->
-            <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div x-show="open"  x-cloak class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                 <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative">
                     <h2 class="text-lg font-semibold text-gray-700 mb-4">Pilih Tanggal Data</h2>
 
