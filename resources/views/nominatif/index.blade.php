@@ -153,7 +153,7 @@
                         <a
                             href="{{ route('nominatif.rekap.kol', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $selectedDatadates)),
+                                'datadate' => implode(',', (array) request()->query('datadate', $selectedDatadate)),
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Kolektibilitas</h3>
                         </a>
