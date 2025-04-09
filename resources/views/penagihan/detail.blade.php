@@ -327,7 +327,7 @@
         function openDeleteModal(uuid) {
             const modal = document.getElementById('deleteModal');
             const form = document.getElementById('deleteForm');
-            form.action = `{{ url('/penagihan') }}/${uuid}`;
+            form.action = `{{ secure_url('/penagihan') }}/${uuid}`;
             modal.classList.remove('hidden');
         }
     
