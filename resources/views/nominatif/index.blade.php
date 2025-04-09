@@ -100,11 +100,14 @@
                     </div>
 
                     <div class="flex-1">
-                        <a
-                            href="{{ route('nominatif.cabang', [
-                                'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate')),
-                            ]) }}">
+                    @php
+                        $queryDatadate = request()->query('datadate') ?? $datadates;
+                    @endphp
+
+                    <a href="{{ route('nominatif.cabang', [ 
+                        'branch_code' => $selectedCab,
+                        'datadate' => (array) $queryDatadate, // pastikan array
+                    ]) }}">
                             <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
                         </a>
                         <h3 class="text-sm font-bold mt-1">
