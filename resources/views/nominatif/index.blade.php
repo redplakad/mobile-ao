@@ -103,7 +103,7 @@
                         <a
                             href="{{ route('nominatif.cabang', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                                'datadate' => implode(',', (array) request()->query('datadate')),
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Nominatif Kredit</h3>
                         </a>
