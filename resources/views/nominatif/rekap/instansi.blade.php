@@ -120,40 +120,58 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
 
 <script>
-        $(document).ready(function () {
-            $('#instansi-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route("nominatif.rekap.instansi.data", ["branch_code" => $branch_code, "datadate" => $datadate]) }}',
-                columns: [
-                    {
-                        data: 'TEMPAT_BEKERJA',
-                        render: function (data, type, row) {
-                            return `<a href="${row.TEMPAT_BEKERJA_LINK}" class="text-blue-600 underline">${data ?? 'Unknown'}</a>`;
-                        }
-                    },
-                    {
-                        data: 'total_count',
-                        render: data => parseInt(data).toLocaleString('id-ID')
-                    },
-                    {
-                        data: 'total_sum',
-                        render: data => parseInt(data).toLocaleString('id-ID')
-                    },
-                    {
-                        data: 'npl_sum',
-                        render: data => parseInt(data).toLocaleString('id-ID')
-                    },
-                    {
-                        data: 'DETAIL_LINK',
-                        render: function (data) {
-                            return `<a href="${data}" class="text-blue-600 underline">Detail</a>`;
-                        },
-                        orderable: false,
-                        searchable: false
+    $(document).ready(function () {
+        const originalUrl = '{{ route("nominatif.rekap.instansi.data", ["branch_code" => $branch_code, "datadate" => $datadate]) }}';
+
+        // Buat URL baru yang paksa pakai https, kecuali jika localhost
+        const ajaxUrl = (() => {
+            try {
+                const url = new URL(originalUrl, window.location.origin);
+                if (url.hostname === 'localhost' || url.hostname === '127.0.0.1') {
+                    url.protocol = 'http:';
+                } else {
+                    url.protocol = 'https:';
+                }
+                return url.href;
+            } catch (e) {
+                console.error('Invalid URL:', originalUrl);
+                return originalUrl;
+            }
+        })();
+
+        $('#instansi-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: ajaxUrl,
+            columns: [
+                {
+                    data: 'TEMPAT_BEKERJA',
+                    render: function (data, type, row) {
+                        return `<a href="${row.TEMPAT_BEKERJA_LINK}" class="text-blue-600 underline">${data ?? 'Unknown'}</a>`;
                     }
-                ]
-            });
+                },
+                {
+                    data: 'total_count',
+                    render: data => parseInt(data).toLocaleString('id-ID')
+                },
+                {
+                    data: 'total_sum',
+                    render: data => parseInt(data).toLocaleString('id-ID')
+                },
+                {
+                    data: 'npl_sum',
+                    render: data => parseInt(data).toLocaleString('id-ID')
+                },
+                {
+                    data: 'DETAIL_LINK',
+                    render: function (data) {
+                        return `<a href="${data}" class="text-blue-600 underline">Detail</a>`;
+                    },
+                    orderable: false,
+                    searchable: false
+                }
+            ]
         });
-    </script>
+    });
+</script>
 @endpush
