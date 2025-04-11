@@ -10,7 +10,7 @@ use App\Models\RekapPerProduk;
 use App\Models\PageView;
 
 use Illuminate\Http\Request;
-use Laravel\Octane\Facades\Octane;
+use Laravel\Octane\Contracts\OctaneCache;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Auth;
 
@@ -124,22 +124,20 @@ class KreditController extends Controller
     }
     // app/Http/Controllers/NominatifController.php
     
-    public function showByBranch($branch_code, Request $request)
+    public function showByBranch($branch_code, Request $request, OctaneCache $octaneCache)
     {
         $user = Auth::user();
-        $datadate = request('datadate');
+        $datadate = $request->get('datadate');
     
-        // ✅ Cache datadate terbaru jika tidak ada param
         if (!$datadate) {
-            $datadate = Octane::cache()->remember("latest_datadate_{$branch_code}", 60, function () use ($branch_code) {
+            $datadate = $octaneCache->remember("latest_datadate_{$branch_code}", 60, function () use ($branch_code) {
                 return Kredit::where('CAB', $branch_code)->latest('DATADATE')->value('DATADATE');
             });
         }
     
         $selectedCab = $branch_code;
     
-        // ✅ Cache nama cabang
-        $selectedCabName = Octane::cache()->remember("branch_name_{$selectedCab}", 60, function () use ($selectedCab) {
+        $selectedCabName = $octaneCache->remember("branch_name_{$selectedCab}", 60, function () use ($selectedCab) {
             return ucwords(strtolower(
                 optional(Branch::where("branch_code", $selectedCab)->first())->branch_name ?? '-'
             ));
@@ -147,23 +145,20 @@ class KreditController extends Controller
     
         $branchCode = $branch_code;
     
-        // ✅ Cache list AO, Produk, Instansi
-        $listAO = Octane::cache()->remember("list_ao_{$branchCode}_{$datadate}", 60, fn () =>
+        $listAO = $octaneCache->remember("list_ao_{$branchCode}_{$datadate}", 60, fn () =>
             Kredit::where("datadate", $datadate)->where("CAB", $branchCode)->distinct()->pluck("AO")
         );
     
-        $listProduk = Octane::cache()->remember("list_produk_{$branchCode}_{$datadate}", 60, fn () =>
+        $listProduk = $octaneCache->remember("list_produk_{$branchCode}_{$datadate}", 60, fn () =>
             Kredit::where("datadate", $datadate)->where("CAB", $branchCode)->distinct()->pluck("KET_KD_PRD")
         );
     
-        $listInstansi = Octane::cache()->remember("list_instansi_{$branchCode}_{$datadate}", 60, fn () =>
+        $listInstansi = $octaneCache->remember("list_instansi_{$branchCode}_{$datadate}", 60, fn () =>
             Kredit::where("datadate", $datadate)->where("CAB", $branchCode)->distinct()->pluck("TEMPAT_BEKERJA")
         );
     
-        // Main query
         $query = Kredit::where("datadate", $datadate)->where("CAB", $selectedCab);
     
-        // Filter
         if ($request->filled("kolektibilitas")) {
             $query->where("KODE_KOLEK", $request->kolektibilitas);
         }
@@ -184,28 +179,20 @@ class KreditController extends Controller
             $search = $request->q;
             $query->where(function ($query) use ($search) {
                 $query->where("NAMA_NASABAH", "like", "%$search%")
-                    ->orWhere("NOREK", "like", "%$search%");
+                      ->orWhere("NOREK", "like", "%$search%");
             });
         }
     
-        // ✅ Cache paginated data (in-memory only)
         $cacheKey = "paginate_{$branchCode}_{$datadate}_" . md5(json_encode($request->all()));
-        $kredit = Octane::cache()->remember($cacheKey, 60, function () use ($query) {
-            return $query->paginate(10);
-        });
+        $kredit = $octaneCache->remember($cacheKey, 60, fn () =>
+            $query->paginate(10)
+        );
     
         return view("nominatif.branch", compact(
-            "user",
-            "kredit",
-            "listAO",
-            "listProduk",
-            "listInstansi",
-            "selectedCab",
-            "selectedCabName",
-            "datadate"
+            "user", "kredit", "listAO", "listProduk", "listInstansi",
+            "selectedCab", "selectedCabName", "datadate"
         ));
-    }
-    
+    }    
 
     public function recapByKol($branch_code, Request $request)
     {
