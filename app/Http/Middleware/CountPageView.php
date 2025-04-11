@@ -18,6 +18,7 @@ class CountPageView
             'nominatif.rekap.kol',
             'nominatif.rekap.produk',
             'nominatif.rekap.ao',
+            'nominatif.rekap.instansi',
         ];
 
         if (in_array($routeName, $routesToTrack)) {
