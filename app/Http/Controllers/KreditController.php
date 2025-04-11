@@ -26,6 +26,15 @@ class KreditController extends Controller
     {
         $user = Auth::user();
         $selectedCab = $request->query("cab", $user->branch?->branch_code);
+
+        $datadate = request('datadate');
+
+        if (!$datadate) {
+            $datadate = Kredit::where('CAB', $selectedCab)
+                ->latest('DATADATE')
+                ->value('DATADATE');
+        }
+
         $selectedCabName = Branch::where("branch_code", $selectedCab)->first();
         $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
 
@@ -49,22 +58,6 @@ class KreditController extends Controller
             now()->addMinutes(60),
             function () {
                 return Kredit::distinct()->pluck("CAB");
-            }
-        );
-
-        // Ambil daftar tanggal unik dari cache atau database
-        $datadates = Cache::remember(
-            "kredit_datadates",
-            now()->addMinutes(60),
-            function () {
-                return Kredit::distinct()
-                    ->pluck("datadate")
-                    ->map(
-                        fn($date) => \Carbon\Carbon::parse($date)->format(
-                            "Y-m-d"
-                        )
-                    )
-                    ->toArray();
             }
         );
 
@@ -101,6 +94,9 @@ class KreditController extends Controller
         $aoAvatars = $pageViews['nominatif.rekap.ao']['avatars'];
         $aoTotalHit = $pageViews['nominatif.rekap.ao']['totalHit'];
 
+        $aoAvatars = $pageViews['nominatif.rekap.instansi']['avatars'];
+        $aoTotalHit = $pageViews['nominatif.rekap.instansi']['totalHit'];
+
         return view(
             "nominatif.index",
             compact(
@@ -109,7 +105,7 @@ class KreditController extends Controller
                 "selectedDatadate",
                 "user",
                 "cabs",
-                "datadates",
+                "datadate",
                 "dataExists",
                 "latestDate",
                 'cabangAvatars',
