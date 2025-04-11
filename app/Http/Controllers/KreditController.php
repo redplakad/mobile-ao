@@ -128,7 +128,14 @@ class KreditController extends Controller
     public function showByBranch($branch_code, Request $request)
     {
         $user = Auth::user();
-        $datadate = request("datadate", "2025-03-24");
+        $datadate = request('datadate');
+
+        if (!$datadate) {
+            $datadate = Kredit::where('CAB', $branch_code)
+                ->latest('DATADATE')
+                ->value('DATADATE');
+        }
+
         $selectedCab = $branch_code;
         $selectedCabName = Branch::where("branch_code", $selectedCab)->first();
         $selectedCabName = ucwords(strtolower($selectedCabName->branch_name));
