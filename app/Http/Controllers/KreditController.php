@@ -82,20 +82,20 @@ class KreditController extends Controller
         
         $pageViews = collect($routes)->mapWithKeys(fn($route) => [$route => PageView::getRouteStats($route)]);
         
-        $cabangAvatars = $pageViews['nominatif.cabang']['avatars'];
-        $cabangTotalHit = $pageViews['nominatif.cabang']['totalHit'];
+        $cabangAvatars = $pageViews['nominatif.cabang']['avatars'] ?? [];
+        $cabangTotalHit = $pageViews['nominatif.cabang']['totalHit'] ?? 0;
         
-        $kolAvatars = $pageViews['nominatif.rekap.kol']['avatars'];
-        $kolTotalHit = $pageViews['nominatif.rekap.kol']['totalHit'];
+        $kolAvatars = $pageViews['nominatif.rekap.kol']['avatars'] ?? [];
+        $kolTotalHit = $pageViews['nominatif.rekap.kol']['totalHit'] ?? 0;
         
-        $produkAvatars = $pageViews['nominatif.rekap.produk']['avatars'];
-        $produkTotalHit = $pageViews['nominatif.rekap.produk']['totalHit'];
+        $produkAvatars = $pageViews['nominatif.rekap.produk']['avatars'] ?? [];
+        $produkTotalHit = $pageViews['nominatif.rekap.produk']['totalHit'] ?? 0;
         
-        $aoAvatars = $pageViews['nominatif.rekap.ao']['avatars'];
-        $aoTotalHit = $pageViews['nominatif.rekap.ao']['totalHit'];
-
-        $aoAvatars = $pageViews['nominatif.rekap.instansi']['avatars'];
-        $aoTotalHit = $pageViews['nominatif.rekap.instansi']['totalHit'];
+        $aoAvatars = $pageViews['nominatif.rekap.ao']['avatars'] ?? [];
+        $aoTotalHit = $pageViews['nominatif.rekap.ao']['totalHit'] ?? 0;
+        
+        $instansiAvatars = $pageViews['nominatif.rekap.instansi']['avatars'] ?? [];
+        $instansiTotalHit = $pageViews['nominatif.rekap.instansi']['totalHit'] ?? 0;        
 
         return view(
             "nominatif.index",
@@ -116,6 +116,8 @@ class KreditController extends Controller
                 'produkTotalHit',
                 'aoAvatars',
                 'aoTotalHit',
+                'instansiAvatars',
+                'instansiTotalHit'
             )
         );
     }
