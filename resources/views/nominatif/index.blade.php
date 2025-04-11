@@ -154,7 +154,7 @@
                         <a
                             href="{{ route('nominatif.rekap.kol', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                                'datadate' => $datadate,
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Kolektibilitas</h3>
                         </a>
@@ -206,7 +206,7 @@
                         <a
                             href="{{ route('nominatif.rekap.produk', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                                'datadate' => $datadate,
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Produk</h3>
                         </a>
@@ -257,7 +257,7 @@
                         <a
                             href="{{ route('nominatif.rekap.ao', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                                'datadate' => $datadate,
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Account Officer</h3>
                         </a>
@@ -308,7 +308,7 @@
                         <a
                             href="{{ route('nominatif.rekap.instansi', [
                                 'branch_code' => $selectedCab,
-                                'datadate' => implode(',', (array) request()->query('datadate', $datadates)),
+                                'datadate' => $datadate,
                             ]) }}">
                             <h3 class="text-sm font-bold mt-1">Rekap Per Instansi</h3>
                         </a>
