@@ -332,14 +332,14 @@
 
                     <div class="flex items-center gap-2">
                         <div class="flex -space-x-2">
-                            @foreach ($aoAvatars as $avatar)
+                            @foreach ($instansiAvatars as $avatar)
                                 <img src="{{ $avatar }}"
                                     class="w-6 h-6 rounded-full border-2 border-white object-cover">
                             @endforeach
                         </div>
                         <div class="flex items-center gap-1 text-gray-500">
                             <x-tabler-eye class="w-5 h-5 text-gray-500 text-xs" />
-                            <span class="text-xs">{{ $aoTotalHit }} kali</span>
+                            <span class="text-xs">{{ $instansiTotalHit }} kali</span>
                         </div>
                     </div>
                 </div>
